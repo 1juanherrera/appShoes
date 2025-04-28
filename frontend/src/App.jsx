@@ -8,18 +8,20 @@ import AdminRoute from "./routes/adminRoute";
 import { Profile } from "./pages/Profile";
 import ProtectedRoute from "./routes/protectedRoute";
 import { Error } from "./components/Error";
+import { Navbar } from "./components/Navbar";
 
 export const App = () => {
 
   return (
     <Router>
+      <Navbar />
       <Routes>
         {/* Rutas públicas */}
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/error" element={<Error />} />
-
+        
 
         {/* Rutas protegidas para administradores */}
         <Route
