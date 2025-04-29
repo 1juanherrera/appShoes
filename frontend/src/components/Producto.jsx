@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import request from "../api/apiClient";
 import { useSearch } from "../hooks/useSearch";
-import { Search } from "./Search";
+import { Search } from "./Search";  
 
 export const Producto = () => {
   const [productos, setProductos] = useState([]);
@@ -22,8 +22,11 @@ export const Producto = () => {
     fetchProductos();
   }, []);
 
+  console.log(filteredProducts);
+
+
   return (
-    <div className="p-4 border">
+    <div>
       <h3 className="text-2xl font-bold mb-4">Lista de Productos</h3>
       {error && <p className="text-red-500">{error}</p>}
       <Search onSearch={handleSearch} />
@@ -31,10 +34,10 @@ export const Producto = () => {
         {filteredProducts.map((producto) => (
           <div key={producto.id} className="p-4 border rounded shadow">
             <h2 className="text-lg font-bold">{producto.nombre}</h2>
+            <img src={producto.imagen} alt={producto.nombre} className="w-full   object-cover mb-2" />
             <p>{producto.descripcion}</p>
             <p className="text-green-500 font-bold">${producto.precio}</p>
             <p>Stock: {producto.stock}</p>
-            <p>Categoría ID: {producto.categoriaId}</p>
           </div>
         ))}
       </div>
