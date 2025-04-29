@@ -5,4 +5,27 @@
   margin: 0;
   padding: 0;
   font-family: "Poppins", sans-serif;
+  
+}
+
+body {
+  background-color: #F4F4F4;
+}
+
+.admin {
+  color: #fe9a00;
+}
+
+.admin:hover {
+  color: #fe9a00;
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
 }

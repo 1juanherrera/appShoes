@@ -1,27 +1,33 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { Login } from './pages/Login'
-import { Home } from './pages/Home'
-import AdminUsuarios from "./components/AdminUsuarios";
-import AdminProductos from "./components/AdminProductos";
-import AdminCategorias from "./components/AdminCategorias";
+import { BrowserRouter as Router, Routes, Route, Navigate  } from "react-router-dom";
+import { Login } from './pages/Login';
+import { Home } from './pages/Home';
+import { AdminUsuarios } from "./components/AdminUsuarios";
+import { AdminProductos } from "./components/AdminProductos";
+import { AdminCategorias } from "./components/AdminCategorias";
 import AdminRoute from "./routes/adminRoute";
 import { Profile } from "./pages/Profile";
 import ProtectedRoute from "./routes/protectedRoute";
 import { Error } from "./components/Error";
 import { Navbar } from "./components/Navbar";
+import { Categorias } from "./components/Categorias";
+import { getToken } from "./utils/session";
+import { ProductosCategoria } from "./components/ProductosCategoria";
+import { Carrito } from "./components/Carrito";
+import { Admin } from "./pages/Admin";
 
 export const App = () => {
+  const token = getToken();
+
 
   return (
     <Router>
-      <Navbar />
+      {token && <Navbar />}
       <Routes>
         {/* Rutas públicas */}
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/error" element={<Error />} />
-        
 
         {/* Rutas protegidas para administradores */}
         <Route
@@ -48,6 +54,14 @@ export const App = () => {
             </AdminRoute>
           }
         />
+           <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          }
+        />  
         {/* Rutas protegidas para usuarios autenticados */}
         <Route
           path="/profile"
@@ -57,7 +71,31 @@ export const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/categorias"
+          element={
+            <ProtectedRoute>
+              <Categorias />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/productos/categoria/:id"
+          element={
+            <ProtectedRoute>
+              <ProductosCategoria />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/carrito"
+          element={
+            <ProtectedRoute>
+              <Carrito />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );
-}
+};
