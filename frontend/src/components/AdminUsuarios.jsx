@@ -1,43 +1,39 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useCrud } from "../hooks/useCrud";
-import { Modal } from "../components/Modal";
 
-export const AdminUsuarios = ({ onClose }) => {
-  const { items, crear, actualizar, eliminar } = useCrud("/usuarios");
-  const [selectedUsuario, setSelectedUsuario] = useState(null);
+export const AdminUsuarios = () => {
+  const { items, actualizar, eliminar, loading, error } = useCrud("/admin/usuarios");
+  const [editingUser, setEditingUser] = useState(null);
 
-  const handleSave = async (usuario) => {
-    if (usuario.id) {
-      await actualizar(usuario.id, usuario);
-    } else {
-      await crear(usuario);
-    }
-    setSelectedUsuario(null);
+  const handleUpdate = async () => {
+    if (!editingUser) return;
+    await actualizar(editingUser.id, editingUser);
+    setEditingUser(null);
   };
 
   return (
-    <Modal onClose={onClose}>
+    <div className="container mx-auto p-6">
       <h2 className="text-xl font-bold mb-4">Administrar Usuarios</h2>
-      <button
-        onClick={() => setSelectedUsuario({})}
-        className="bg-blue-600 text-white px-4 py-2 rounded mb-4"
-      >
-        Crear Usuario
-      </button>
+      {loading && <p className="text-gray-500">Cargando...</p>}
+      {error && <p className="text-red-600">{error}</p>}
+
       <ul>
         {items.map((usuario) => (
-          <li key={usuario.id} className="flex justify-between items-center mb-2">
-            <span>{usuario.nombre}</span>
+          <li key={usuario.id} className="flex justify-between items-center border p-4 mb-2">
+            <div>
+              <p className="font-semibold">{usuario.nombres} {usuario.apellidos}</p>
+              <p className="text-sm text-gray-500">{usuario.email} ({usuario.rol})</p>
+            </div>
             <div>
               <button
-                onClick={() => setSelectedUsuario(usuario)}
-                className="bg-yellow-500 text-white px-4 py-2 rounded mr-2"
+                onClick={() => setEditingUser(usuario)}
+                className="bg-yellow-500 text-white px-4 py-1 rounded mr-2"
               >
                 Editar
               </button>
               <button
                 onClick={() => eliminar(usuario.id)}
-                className="bg-red-600 text-white px-4 py-2 rounded"
+                className="bg-red-600 text-white px-4 py-1 rounded"
               >
                 Eliminar
               </button>
@@ -45,61 +41,44 @@ export const AdminUsuarios = ({ onClose }) => {
           </li>
         ))}
       </ul>
-      {selectedUsuario && (
-        <UsuarioForm
-          usuarioInicial={selectedUsuario}
-          onSave={handleSave}
-          onClose={() => setSelectedUsuario(null)}
-        />
+
+      {editingUser && (
+        <div className="bg-white border p-4 mt-6 rounded">
+          <h3 className="font-bold mb-2">Editar Usuario</h3>
+          <input
+            className="border p-2 w-full mb-2"
+            value={editingUser.nombres}
+            onChange={(e) => setEditingUser({ ...editingUser, nombres: e.target.value })}
+            placeholder="Nombres"
+          />
+          <input
+            className="border p-2 w-full mb-2"
+            value={editingUser.apellidos}
+            onChange={(e) => setEditingUser({ ...editingUser, apellidos: e.target.value })}
+            placeholder="Apellidos"
+          />
+          <select
+            className="border p-2 w-full mb-2"
+            value={editingUser.rol}
+            onChange={(e) => setEditingUser({ ...editingUser, rol: e.target.value })}
+          >
+            <option value="USUARIO">Usuario</option>
+            <option value="ADMINISTRADOR">Administrador</option>
+          </select>
+          <button
+            className="bg-blue-600 text-white px-4 py-1 rounded mr-2"
+            onClick={handleUpdate}
+          >
+            Guardar
+          </button>
+          <button
+            className="bg-gray-300 text-black px-4 py-1 rounded"
+            onClick={() => setEditingUser(null)}
+          >
+            Cancelar
+          </button>
+        </div>
       )}
-    </Modal>
-  );
-};
-
-const UsuarioForm = ({ usuarioInicial, onSave, onClose }) => {
-  const [usuario, setUsuario] = useState(usuarioInicial);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUsuario({ ...usuario, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave(usuario);
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded">
-      <h2 className="text-xl font-bold mb-4">
-        {usuario.id ? "Editar Usuario" : "Crear Usuario"}
-      </h2>
-      <input
-        type="text"
-        name="nombre"
-        placeholder="Nombre"
-        value={usuario.nombre || ""}
-        onChange={handleChange}
-        className="w-full p-2 mb-4 border rounded"
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Correo Electrónico"
-        value={usuario.email || ""}
-        onChange={handleChange}
-        className="w-full p-2 mb-4 border rounded"
-      />
-      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
-        Guardar
-      </button>
-      <button
-        type="button"
-        onClick={onClose}
-        className="bg-gray-400 text-white px-4 py-2 rounded ml-2"
-      >
-        Cancelar
-      </button>
-    </form>
+    </div>
   );
 };

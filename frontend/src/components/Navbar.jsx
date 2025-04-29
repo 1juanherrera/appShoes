@@ -5,6 +5,7 @@ import { IoMdExit } from "react-icons/io";
 import { BiCategoryAlt } from "react-icons/bi";
 import { FiHome } from "react-icons/fi";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
+import Logout from "./Logout";
 
 export const Navbar = () => {
   return (
@@ -17,30 +18,36 @@ export const Navbar = () => {
           <li>
             <Link to="/home" className="hover:underline text-white cursor-pointer flex justify-center items-center text-3xl">
             <FiHome />
-              Inicio
+              <span className="ml-2">Inicio</span>
             </Link>
           </li>
           <li>
             <Link to="/categorias" className="hover:underline text-white cursor-pointer flex justify-center items-center text-3xl">
             <BiCategoryAlt />
-              Categorias
+            <span className="ml-2">Categorias</span>
             </Link>
           </li>
           <li>
             <Link to="/admin" className="admin hover:underline cursor-pointer flex justify-center items-center text-3xl">
             <MdOutlineAdminPanelSettings />
-              Admin
+            <span className="ml-2">Admin</span>
             </Link>
           </li>
         </ul>
         <ul className="flex justify-end items-center w-xs text-3xl">
-            <li className="cursor-pointer pr-4 hover:underline"><CgProfile /></li>
-            <li className="cursor-pointer pr-4 hover:underline">
+            <li className="cursor-pointer pr-4">
+            <Link to="/profile" className="hover:underline text-white cursor-pointer">
+            <CgProfile />
+            </Link>
+            </li>
+            <li className="pr-4 ">
             <Link to="/carrito" className="hover:underline text-white cursor-pointer">
             <RiShoppingCartLine />
             </Link>
             </li>
-            <li className="hover:underline pr-4 cursor-pointer text-red-500"><IoMdExit /></li>
+            <li className="hover:underline p-0 cursor-pointer text-red-700">
+              <Logout />
+              </li>
         </ul>
       </div>
     </nav>

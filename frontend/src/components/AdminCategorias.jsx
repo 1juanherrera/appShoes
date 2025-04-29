@@ -1,36 +1,58 @@
 import React, { useState } from "react";
 import { useCrud } from "../hooks/useCrud";
-import { Modal } from "../components/Modal"
+import { CategoriaForm } from "./CategoriaForm";
+import { listarCategorias } from "../api/categorias";
 
-export const AdminCategorias = ({ onClose }) => {
-  const { items, crear, actualizar, eliminar } = useCrud("/categorias");
-  const [selectedCategoria, setSelectedCategoria] = useState(null);
+export const AdminCategorias = () => {
+  const { items, crear, actualizar, eliminar } = useCrud("/admin/categorias", {
+    listar: listarCategorias, // Usa la función personalizada para listar
+  });
+  const [selectedCategoria, setSelectedCategoria] = useState(null); // Categoría seleccionada
+  const [isFormVisible, setIsFormVisible] = useState(false); // Controla si el formulario está visible
 
   const handleSave = async (categoria) => {
     if (categoria.id) {
-      await actualizar(categoria.id, categoria);
+      await actualizar(categoria.id, categoria); // Actualiza la categoría existente
     } else {
-      await crear(categoria);
+      await crear(categoria); // Crea una nueva categoría
     }
-    setSelectedCategoria(null);
+    setSelectedCategoria(null); // Limpia la categoría seleccionada
+    setIsFormVisible(false); // Oculta el formulario
+  };
+
+  const handleCreate = () => {
+    setSelectedCategoria({}); // Categoría vacía para crear
+    setIsFormVisible(true); // Muestra el formulario
+  };
+
+  const handleEdit = (categoria) => {
+    setSelectedCategoria(categoria); // Establece la categoría seleccionada
+    setIsFormVisible(true); // Muestra el formulario
   };
 
   return (
-    <Modal onClose={onClose}>
+    <div className="container mx-auto p-6">
       <h2 className="text-xl font-bold mb-4">Administrar Categorías</h2>
       <button
-        onClick={() => setSelectedCategoria({})}
+        onClick={handleCreate}
         className="bg-blue-600 text-white px-4 py-2 rounded mb-4"
       >
         Crear Categoría
       </button>
+      {isFormVisible && (
+        <CategoriaForm
+          categoriaInicial={selectedCategoria}
+          onSave={handleSave}
+          onClose={() => setIsFormVisible(false)} // Oculta el formulario
+        />
+      )}
       <ul>
         {items.map((categoria) => (
           <li key={categoria.id} className="flex justify-between items-center mb-2">
-            <span>{categoria.nombre}</span>
+            <span className="p-4">{categoria.nombre}</span>
             <div>
               <button
-                onClick={() => setSelectedCategoria(categoria)}
+                onClick={() => handleEdit(categoria)}
                 className="bg-yellow-500 text-white px-4 py-2 rounded mr-2"
               >
                 Editar
@@ -45,53 +67,7 @@ export const AdminCategorias = ({ onClose }) => {
           </li>
         ))}
       </ul>
-      {selectedCategoria && (
-        <CategoriaForm
-          categoriaInicial={selectedCategoria}
-          onSave={handleSave}
-          onClose={() => setSelectedCategoria(null)}
-        />
-      )}
-    </Modal>
-  );
-};
-
-const CategoriaForm = ({ categoriaInicial, onSave, onClose }) => {
-  const [categoria, setCategoria] = useState(categoriaInicial);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCategoria({ ...categoria, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave(categoria);
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded">
-      <h2 className="text-xl font-bold mb-4">
-        {categoria.id ? "Editar Categoría" : "Crear Categoría"}
-      </h2>
-      <input
-        type="text"
-        name="nombre"
-        placeholder="Nombre de la Categoría"
-        value={categoria.nombre || ""}
-        onChange={handleChange}
-        className="w-full p-2 mb-4 border rounded"
-      />
-      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
-        Guardar
-      </button>
-      <button
-        type="button"
-        onClick={onClose}
-        className="bg-gray-400 text-white px-4 py-2 rounded ml-2"
-      >
-        Cancelar
-      </button>
-    </form>
+ 
+    </div>
   );
 };

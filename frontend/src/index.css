@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import "tailwindcss";
 
+
 *, body {
   margin: 0;
   padding: 0;
@@ -28,4 +29,20 @@ body {
 
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-out;
+}
+
+.list-categorias {
+  padding-bottom: 50px;
+} 
+
+.productos-categorias {
+  padding-bottom: 100px;
+}
+
+.logout {
+  margin-top: 8px;
+}
+
+.container-list:hover {
+  background: #e5e7eb;
 }

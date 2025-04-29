@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useGetUsersData } from "../hooks/useGetusersData";
-import { getToken } from "../utils/session";
+import { getToken } from "../store/session";
 
 const AdminRoute = ({ children }) => {
   const { user } = useGetUsersData();

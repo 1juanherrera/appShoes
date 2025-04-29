@@ -1,4 +1,4 @@
-import { getToken } from "../utils/session"; // Asegúrate de tener una función para obtener el token
+import { getToken } from "../store/session"; // Asegúrate de tener una función para obtener el token
 
 const BASE_URL = "http://localhost:5000/api"; // Cambia esto si tu backend está en otra URL
 
@@ -35,19 +35,36 @@ async function request(endpoint, method = "GET", data = null, needsAuth = false)
   try {
     const response = await fetch(url, config);
 
-    // Manejo de respuestas sin contenido
+    // Manejo de respuestas sin contenido (204 No Content)
     if (response.status === 204) {
       return { success: true, error: null, data: null, status: response.status };
     }
 
-    const responseData = await response.json();
+    // Intenta parsear la respuesta como JSON
+    let responseData = null;
+    try {
+      responseData = await response.json();
+    } catch (error) {
+      // Si no se puede parsear, verifica si la respuesta es válida
+      if (!response.ok) {
+        return {
+          success: false,
+          error: {
+            status: response.status,
+            message: response.statusText || `Error ${response.status}`,
+          },
+          data: null,
+        };
+      }
+    }
 
+    // Manejo de errores HTTP
     if (!response.ok) {
       return {
         success: false,
         error: {
           status: response.status,
-          message: responseData.message || `Error ${response.status}`,
+          message: responseData?.message || response.statusText || `Error ${response.status}`,
         },
         data: null,
       };

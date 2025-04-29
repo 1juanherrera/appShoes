@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate  } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Login } from './pages/Login';
 import { Home } from './pages/Home';
 import { AdminUsuarios } from "./components/AdminUsuarios";
@@ -10,63 +10,73 @@ import ProtectedRoute from "./routes/protectedRoute";
 import { Error } from "./components/Error";
 import { Navbar } from "./components/Navbar";
 import { Categorias } from "./components/Categorias";
-import { getToken } from "./utils/session";
 import { ProductosCategoria } from "./components/ProductosCategoria";
 import { Carrito } from "./components/Carrito";
 import { Admin } from "./pages/Admin";
 
 export const App = () => {
-  const token = getToken();
-
-
   return (
     <Router>
-      {token && <Navbar />}
       <Routes>
         {/* Rutas públicas */}
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={
+          <>
+          <Navbar/>
+          <Home />
+          </>
+        } />
         <Route path="/error" element={<Error />} />
 
-        {/* Rutas protegidas para administradores */}
+        {/* Rutas protegidas con Navbar */}
         <Route
           path="/admin/usuarios"
           element={
-            <AdminRoute>
-              <AdminUsuarios />
-            </AdminRoute>
+            <ProtectedRoute>
+              <Navbar />
+              <AdminRoute>
+                <AdminUsuarios />
+              </AdminRoute>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/admin/productos"
           element={
-            <AdminRoute>
-              <AdminProductos />
-            </AdminRoute>
+            <ProtectedRoute>
+              <Navbar />
+              <AdminRoute>
+                <AdminProductos />
+              </AdminRoute>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/admin/categorias"
           element={
-            <AdminRoute>
-              <AdminCategorias />
-            </AdminRoute>
+            <ProtectedRoute>
+              <Navbar />
+              <AdminRoute>
+                <AdminCategorias />
+              </AdminRoute>
+            </ProtectedRoute>
           }
         />
-           <Route
+        <Route
           path="/admin"
           element={
             <ProtectedRoute>
+              <Navbar />
               <Admin />
             </ProtectedRoute>
           }
-        />  
-        {/* Rutas protegidas para usuarios autenticados */}
+        />
         <Route
           path="/profile"
           element={
             <ProtectedRoute>
+              <Navbar />
               <Profile />
             </ProtectedRoute>
           }
@@ -75,6 +85,7 @@ export const App = () => {
           path="/categorias"
           element={
             <ProtectedRoute>
+              <Navbar />
               <Categorias />
             </ProtectedRoute>
           }
@@ -83,6 +94,7 @@ export const App = () => {
           path="/productos/categoria/:id"
           element={
             <ProtectedRoute>
+              <Navbar />
               <ProductosCategoria />
             </ProtectedRoute>
           }
@@ -91,6 +103,7 @@ export const App = () => {
           path="/carrito"
           element={
             <ProtectedRoute>
+              <Navbar />
               <Carrito />
             </ProtectedRoute>
           }

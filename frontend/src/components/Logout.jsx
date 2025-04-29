@@ -1,23 +1,24 @@
 import React from "react";
-import { logout } from "../auth/authService";
+import { clearToken } from "../store/session"; 
+import { useNavigate } from "react-router-dom";
+import { IoMdExit } from "react-icons/io";
 
 const Logout = () => {
-  const handleLogout = async () => {
+  const navigate = useNavigate(); // Hook para redirigir al usuario
+
+  const handleLogout = () => {
     try {
-      await logout();
+      clearToken(); // Elimina el token del almacenamiento
       console.log("Sesión cerrada exitosamente");
-      window.location.reload(); // Recarga la página para limpiar el estado
+      navigate("/login"); // Redirige al usuario al login
     } catch (err) {
       console.error("Error al cerrar sesión:", err.message);
     }
   };
 
   return (
-    <button
-      onClick={handleLogout}
-      className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-    >
-      Cerrar Sesión
+    <button onClick={handleLogout} className="hover:underline cursor-pointer text-red-500 logout">
+      <IoMdExit />
     </button>
   );
 }

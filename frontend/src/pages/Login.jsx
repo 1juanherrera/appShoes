@@ -11,11 +11,11 @@ import { useLogin } from "../hooks/useLogin";
     handleSubmit } = useLogin();
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-4 bg-white shadow-lg rounded-lg">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 ">
+      <div className="w-full max-w-md space-y-4 bg-white shadow-lg rounded-lg p-4">
         <h2 className="text-2xl font-bold text-center text-gray-800">Iniciar Sesión</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
+          <div className="mt-4">
             <label className="block text-sm font-medium text-gray-700">Email</label>
             <input
               type="email"
@@ -37,7 +37,7 @@ import { useLogin } from "../hooks/useLogin";
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 mt-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Iniciar Sesión
           </button>

@@ -1,19 +1,24 @@
 import { useState, useEffect } from "react";
 import request from "../api/apiClient";
 
-export const useCrud = (endpoint) => {
+export const useCrud = (endpoint, customActions = {}) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const listar = async () => {
     setLoading(true);
+    setError(null);
     try {
-      const response = await request(endpoint, "GET");
+      const response = customActions.listar
+        ? await customActions.listar()
+        : await request(endpoint, "GET", null, true);
+
       if (response.success) {
-        setItems(response.data);
+        const data = Array.isArray(response.data) ? response.data : [];
+        setItems(data);
       } else {
-        setError(response.error.message);
+        throw new Error(response.error?.message || "Error al listar los datos.");
       }
     } catch (err) {
       setError(err.message);
@@ -24,39 +29,60 @@ export const useCrud = (endpoint) => {
 
   const crear = async (data) => {
     try {
-      const response = await request(endpoint, "POST", data, true);
+      const response = customActions.crear
+        ? await customActions.crear(data)
+        : await request(endpoint, "POST", data, true);
+
       if (response.success) {
         setItems((prev) => [...prev, response.data]);
+      } else {
+        throw new Error(response.error?.message || "Error al crear.");
       }
+
       return response;
     } catch (err) {
       console.error(err);
+      setError(err.message);
     }
   };
 
   const actualizar = async (id, data) => {
     try {
-      const response = await request(`${endpoint}/${id}`, "PUT", data, true);
+      const response = customActions.actualizar
+        ? await customActions.actualizar(id, data)
+        : await request(`${endpoint}/${id}`, "PUT", data, true);
+
       if (response.success) {
         setItems((prev) =>
           prev.map((item) => (item.id === id ? response.data : item))
         );
+      } else {
+        throw new Error(response.error?.message || "Error al actualizar.");
       }
+
       return response;
     } catch (err) {
       console.error(err);
+      setError(err.message);
     }
   };
 
   const eliminar = async (id) => {
     try {
-      const response = await request(`${endpoint}/${id}`, "DELETE", null, true);
+      const response = customActions.eliminar
+        ? await customActions.eliminar(id)
+        : await request(`${endpoint}/${id}`, "DELETE", null, true);
+
       if (response.success) {
         setItems((prev) => prev.filter((item) => item.id !== id));
+      } else {
+        throw new Error(response.error?.message || "Error al eliminar.");
       }
+
       return response;
     } catch (err) {
       console.error(err);
+      setError(err.message);
     }
   };
 
