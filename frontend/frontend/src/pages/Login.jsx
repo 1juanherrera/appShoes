@@ -1,28 +1,14 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { login } from "../auth/authService";
+import { useLogin } from "../hooks/useLogin";
 
  export const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const navigate = useNavigate(); 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-
-    try {
-      const userData = await login(email, password);
-      setSuccess(`Bienvenido, ${userData.nombreUsuario}`);
-      console.log("Datos del usuario:", userData);
-      navigate("/home");
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+  const {   email,
+    setEmail,
+    password,
+    setPassword,
+    error,
+    success,
+    handleSubmit } = useLogin();
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
