@@ -46,3 +46,7 @@ body {
 .container-list:hover {
   background: #e5e7eb;
 }
+
+.admin-links {
+  margin-bottom: 300px !important;
+}

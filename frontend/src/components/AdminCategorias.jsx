@@ -48,8 +48,8 @@ export const AdminCategorias = () => {
       )}
       <ul>
         {items.map((categoria) => (
-          <li key={categoria.id} className="flex justify-between items-center mb-2">
-            <span className="p-4">{categoria.nombre}</span>
+          <li key={categoria.id} className="flex justify-between items-center mb-2 bg-gray-200 hover:bg-gray-300 rounded-lg px-4">
+            <span className="p-4 cursor-pointer">{categoria.nombre}</span>
             <div>
               <button
                 onClick={() => handleEdit(categoria)}

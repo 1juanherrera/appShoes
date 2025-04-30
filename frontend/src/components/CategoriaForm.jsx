@@ -28,7 +28,7 @@ export const CategoriaForm = ({ categoriaInicial, onSave, onClose }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded">
+    <form onSubmit={handleSubmit} className="p-4 border shadow-md rounded mb-4">
       <h2 className="text-xl font-bold mb-4">
         {categoria.id ? "Editar Categoría" : "Crear Categoría"}
       </h2>
@@ -39,7 +39,7 @@ export const CategoriaForm = ({ categoriaInicial, onSave, onClose }) => {
         placeholder="Nombre de la Categoría"
         value={categoria.nombre || ""}
         onChange={handleChange}
-        className="w-full p-2 mb-4 border rounded"
+        className="w-full p-2 mb-4 rounded border-2 border-gray-200 bg-gray-100"
       />
       <button
         type="submit"

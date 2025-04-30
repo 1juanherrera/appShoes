@@ -7,8 +7,8 @@ export const Producto = ({ productos = [], onAgregarAlCarrito }) => {
   const [mensaje, setMensaje] = useState("");
   const [mensajeVisible, setMensajeVisible] = useState(false);
 
-  const handleAgregarAlCarrito = (producto) => {
-    const mensaje = onAgregarAlCarrito(producto); // Obtén el mensaje del hook
+  const handleAgregarAlCarrito = async (producto) => {
+    const mensaje = await onAgregarAlCarrito(producto); // Obtén el mensaje del hook
     setMensaje(mensaje); // Establece el mensaje
     setMensajeVisible(true); // Muestra el mensaje
   };

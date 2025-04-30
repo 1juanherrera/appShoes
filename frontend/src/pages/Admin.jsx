@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export const Admin = () => {
   return (
-    <div className="p-6 container">
+    <div className="p-6 container border">
       <h1 className="text-3xl font-bold">Panel de Administración</h1>
       <div className="flex space-x-4 pt-5 justify-between">
         {/* Enlace para administrar productos */}

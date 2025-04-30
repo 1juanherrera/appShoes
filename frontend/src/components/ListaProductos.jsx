@@ -6,7 +6,6 @@ import { Search } from "./Search";
 
 export const ListaProductos = () => {
   const {
-    productos,
     setProductos,
     filteredProductos,
     handleSearch,
@@ -18,7 +17,6 @@ export const ListaProductos = () => {
       try {
         const data = await request("/productos", "GET");
         setProductos(data.data);
-        console.log(productos);
       } catch (err) {
         console.error("Error al cargar los productos:", err);
       }
@@ -27,11 +25,10 @@ export const ListaProductos = () => {
     fetchProductos();
   }, [setProductos]);
 
-  console.log(productos);
 
   return (
     <div className="container mx-auto p-6">
-      <h3 className="text-3xl font-bold mb-5">
+      <h3 className="text-3xl font-bold mb-2 text-gray-500">
         Lista de Productos
       </h3>
       <Search onSearch={handleSearch} />

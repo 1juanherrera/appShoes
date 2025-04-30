@@ -25,6 +25,7 @@ export const AdminProductos = () => {
   const handleEdit = (producto) => {
     setSelectedProducto(producto); // Establece el producto seleccionado
     setIsFormVisible(true); // Muestra el formulario
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -47,7 +48,7 @@ export const AdminProductos = () => {
       )}
       <ul>
         {items.map((producto) => (
-          <li key={producto.id} className="flex justify-between items-center mb-2">
+          <li key={producto.id} className="flex justify-between items-center mb-2 bg-gray-200 hover:bg-gray-300 rounded-lg px-4">
             <span className="p-4">{producto.nombre}</span>
             <div>
               <button

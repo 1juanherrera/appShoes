@@ -36,3 +36,8 @@ export async function getUserData() {
     throw new Error(response.error.message || "No autenticado");
   }
 }
+
+
+export const registrarUsuario = async (usuario) => {
+  return await request("/auth/register", "POST", usuario, false);
+}

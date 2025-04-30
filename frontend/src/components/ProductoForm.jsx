@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export const ProductoForm = ({ productoInicial, onSave, onClose }) => {
   const [producto, setProducto] = useState(productoInicial || {});
 
   useEffect(() => {
     setProducto(productoInicial || {});
-  }, [productoInicial]);
+  }, [productoInicial])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProducto((prev) => ({ ...prev, [name]: value }));
-  };
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSave(producto);
-  };
-
+  }
+  
   return (
-    <div className="bg-white p-6 rounded shadow-md">
+    <div className="bg-white p-4 rounded border shadow-md mb-4">
       <h3 className="text-lg font-bold mb-4">
         {producto.id ? "Editar Producto" : "Crear Producto"}
       </h3>
@@ -30,7 +30,7 @@ export const ProductoForm = ({ productoInicial, onSave, onClose }) => {
             name="nombre"
             value={producto.nombre || ""}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full rounded px-3 py-2 border-2 border-gray-200 bg-gray-100"
             required
           />
         </div>
@@ -40,7 +40,7 @@ export const ProductoForm = ({ productoInicial, onSave, onClose }) => {
             name="descripcion"
             value={producto.descripcion || ""}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full rounded px-3 py-2 border-2 border-gray-200 bg-gray-100"
           />
         </div>
         <div className="mb-4">
@@ -50,7 +50,7 @@ export const ProductoForm = ({ productoInicial, onSave, onClose }) => {
             name="precio"
             value={producto.precio || ""}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full rounded px-3 py-2 border-2 border-gray-200 bg-gray-100"
             required
           />
         </div>
@@ -61,7 +61,7 @@ export const ProductoForm = ({ productoInicial, onSave, onClose }) => {
             name="stock"
             value={producto.stock || ""}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full rounded px-3 py-2 border-2 border-gray-200 bg-gray-100"
             required
           />
         </div>
@@ -72,7 +72,7 @@ export const ProductoForm = ({ productoInicial, onSave, onClose }) => {
             name="imagen"
             value={producto.imagen || ""}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full rounded px-3 py-2 border-2 border-gray-200 bg-gray-100"
           />
         </div>
         <div className="mb-4">
@@ -82,7 +82,7 @@ export const ProductoForm = ({ productoInicial, onSave, onClose }) => {
             name="categoriaId"
             value={producto.categoriaId || ""}
             onChange={handleChange}
-            className="w-full border rounded px-3 py-2"
+            className="w-full rounded px-3 py-2 border-2 border-gray-200 bg-gray-100"
             required
           />
         </div>
