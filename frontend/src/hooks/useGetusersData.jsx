@@ -4,6 +4,7 @@ import { getUserData } from "../auth/authService";
 export const useGetUsersData = () => {
   const [user, setUser] = useState(null); // Estado para almacenar los datos del usuario
   const [error, setError] = useState(""); // Estado para manejar errores
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -19,8 +20,18 @@ export const useGetUsersData = () => {
     fetchUserData();
   }, []);
 
+  const isAdmin = user?.rol === "ADMINISTRADOR";
+
+  useEffect(() => {
+    if (user) {
+      setIsLoading(false); 
+    }
+  }, [user]);
+
   return {
     user, 
-    error
+    error,
+    isAdmin,
+    isLoading
   }
 }

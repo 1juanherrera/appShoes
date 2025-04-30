@@ -1,43 +1,143 @@
 import { useState, useEffect } from "react";
+import request from "../api/apiClient";
 
 export const useCarrito = () => {
-  // Inicializar el carrito desde sessionStorage
-  const [carrito, setCarrito] = useState(() => {
-    const carritoGuardado = sessionStorage.getItem("carrito");
-    return carritoGuardado ? JSON.parse(carritoGuardado) : [];
-  });
+  const [carrito, setCarrito] = useState([]); // Carrito con productos
+  const [loading, setLoading] = useState(true); // Estado de carga
+  const [error, setError] = useState(null); // Estado de error
 
-  // Sincronizar el carrito con sessionStorage cada vez que cambie
-  useEffect(() => {
-    sessionStorage.setItem("carrito", JSON.stringify(carrito));
-  }, [carrito]);
+  // Obtener el carrito del usuario
+  const obtenerCarrito = async () => {
+    setLoading(true);
+    try {
+      const response = await request("/carrito", "GET", null, true);
+      if (response.success) {
+        setCarrito(response.data.items || []); // Asignar los productos del carrito
+      } else {
+        setError(response.error?.message || "Error al obtener el carrito.");
+      }
+    } catch (err) {
+      setError("Error al obtener el carrito.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Agregar un producto al carrito
-  const agregarAlCarrito = (producto) => {
-    setCarrito((prevCarrito) => {
-      const existe = prevCarrito.find((item) => item.id === producto.id);
-      if (existe) {
-        alert("El producto ya está en el carrito");
-        return prevCarrito;
+  const agregarAlCarrito = async (productoId, cantidad) => {
+    try {
+      const response = await request(
+        "/carrito/items",
+        "POST",
+        { productoId, cantidad },
+        true
+      );
+
+      if (response.success) {
+        setCarrito(response.data.items || []);
+      } else {
+        setError(response.error?.message || "Error al agregar el producto al carrito.");
       }
-      return [...prevCarrito, producto];
-    });
+    } catch (err) {
+      setError("Error al agregar el producto al carrito.");
+      console.error(err);
+    }
+  };
+
+  // Actualizar la cantidad de un producto en el carrito
+  const actualizarCantidad = async (productoId, nuevaCantidad) => {
+    try {
+      const producto = carrito.find((item) => item.producto.id === productoId);
+      if (!producto) {
+        setError("Producto no encontrado en el carrito.");
+        return;
+      }
+
+      const diferencia = nuevaCantidad - producto.cantidad;
+
+      const response = await request(
+        `/carrito/items/${productoId}`,
+        "PUT",
+        { cantidad: nuevaCantidad },
+        true
+      );
+
+      if (response.success) {
+        setCarrito((prevCarrito) =>
+          prevCarrito.map((item) =>
+            item.producto.id === productoId
+              ? {
+                  ...item,
+                  cantidad: nuevaCantidad,
+                  producto: {
+                    ...item.producto,
+                    stock: item.producto.stock - diferencia,
+                  },
+                }
+              : item
+          )
+        );
+      } else {
+        setError(response.error?.message || "Error al actualizar la cantidad del producto.");
+      }
+    } catch (err) {
+      setError("Error al actualizar la cantidad del producto.");
+      console.error(err);
+    }
   };
 
   // Eliminar un producto del carrito
-  const eliminarDelCarrito = (id) => {
-    setCarrito((prevCarrito) => prevCarrito.filter((producto) => producto.id !== id));
+  const eliminarDelCarrito = async (productoId) => {
+    try {
+      const producto = carrito.find((item) => item.producto.id === productoId);
+      if (!producto) {
+        setError("Producto no encontrado en el carrito.");
+        return;
+      }
+
+      const response = await request(`/carrito/items/${productoId}`, "DELETE", null, true);
+
+      if (response.success) {
+        setCarrito((prevCarrito) =>
+          prevCarrito.filter((item) => item.producto.id !== productoId)
+        );
+      } else {
+        setError(response.error?.message || "Error al eliminar el producto del carrito.");
+      }
+    } catch (err) {
+      setError("Error al eliminar el producto del carrito.");
+      console.error(err);
+    }
   };
 
   // Vaciar el carrito
-  const vaciarCarrito = () => {
-    setCarrito([]);
+  const vaciarCarrito = async () => {
+    try {
+      const response = await request("/carrito", "DELETE", null, true);
+
+      if (response.success) {
+        setCarrito([]); // Vaciar el carrito
+      } else {
+        setError(response.error?.message || "Error al vaciar el carrito.");
+      }
+    } catch (err) {
+      setError("Error al vaciar el carrito.");
+      console.error(err);
+    }
   };
+
+  useEffect(() => {
+    obtenerCarrito();
+  }, []);
 
   return {
     carrito,
+    loading,
+    error,
     agregarAlCarrito,
+    actualizarCantidad,
     eliminarDelCarrito,
     vaciarCarrito,
   };
-};  
+};

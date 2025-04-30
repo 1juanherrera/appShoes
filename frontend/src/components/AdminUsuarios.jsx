@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useCrud } from "../hooks/useCrud";
-import { Modal } from "../components/Modal";
+import { UsuarioAdminList } from "./UsuarioAdminList";
 
-export const AdminUsuarios = ({ onClose }) => {
-  const { items, crear, actualizar, eliminar } = useCrud("/usuarios");
+export const AdminUsuarios = () => {
+  const { items, crear, actualizar, eliminar, error, loading } = useCrud("/admin/usuarios");
   const [selectedUsuario, setSelectedUsuario] = useState(null);
+  const [isFormVisible, setIsFormVisible] = useState(false);
 
   const handleSave = async (usuario) => {
     if (usuario.id) {
@@ -13,31 +14,42 @@ export const AdminUsuarios = ({ onClose }) => {
       await crear(usuario);
     }
     setSelectedUsuario(null);
+    setIsFormVisible(false);
+  };
+
+  const handleEdit = (usuario) => {
+    setSelectedUsuario(usuario);
+    setIsFormVisible(true);
   };
 
   return (
-    <Modal onClose={onClose}>
+    <div className="container mx-auto p-6">
       <h2 className="text-xl font-bold mb-4">Administrar Usuarios</h2>
-      <button
-        onClick={() => setSelectedUsuario({})}
-        className="bg-blue-600 text-white px-4 py-2 rounded mb-4"
-      >
-        Crear Usuario
-      </button>
+      {error && <p className="text-red-600">{error}</p>}
+      {isFormVisible && (
+        <UsuarioAdminList
+          usuarioInicial={selectedUsuario}
+          onSave={handleSave}
+          onClose={() => setIsFormVisible(false)}
+        />
+      )}
       <ul>
         {items.map((usuario) => (
-          <li key={usuario.id} className="flex justify-between items-center mb-2">
-            <span>{usuario.nombre}</span>
+          <li key={usuario.id} className="flex justify-between items-center border p-4 mb-2 bg-gray-100 rounded-lg">
+            <div>
+              <p className="font-semibold">{usuario.nombres} {usuario.apellidos}</p>
+              <p className="text-sm text-gray-600">{usuario.email} ({usuario.rol})</p>
+            </div>
             <div>
               <button
-                onClick={() => setSelectedUsuario(usuario)}
-                className="bg-yellow-500 text-white px-4 py-2 rounded mr-2"
+                onClick={() => handleEdit(usuario)}
+                className="bg-yellow-500 text-white px-4 py-1 rounded mr-2"
               >
                 Editar
               </button>
               <button
                 onClick={() => eliminar(usuario.id)}
-                className="bg-red-600 text-white px-4 py-2 rounded"
+                className="bg-red-600 text-white px-4 py-1 rounded"
               >
                 Eliminar
               </button>
@@ -45,61 +57,6 @@ export const AdminUsuarios = ({ onClose }) => {
           </li>
         ))}
       </ul>
-      {selectedUsuario && (
-        <UsuarioForm
-          usuarioInicial={selectedUsuario}
-          onSave={handleSave}
-          onClose={() => setSelectedUsuario(null)}
-        />
-      )}
-    </Modal>
-  );
-};
-
-const UsuarioForm = ({ usuarioInicial, onSave, onClose }) => {
-  const [usuario, setUsuario] = useState(usuarioInicial);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUsuario({ ...usuario, [name]: value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave(usuario);
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded">
-      <h2 className="text-xl font-bold mb-4">
-        {usuario.id ? "Editar Usuario" : "Crear Usuario"}
-      </h2>
-      <input
-        type="text"
-        name="nombre"
-        placeholder="Nombre"
-        value={usuario.nombre || ""}
-        onChange={handleChange}
-        className="w-full p-2 mb-4 border rounded"
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Correo Electrónico"
-        value={usuario.email || ""}
-        onChange={handleChange}
-        className="w-full p-2 mb-4 border rounded"
-      />
-      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
-        Guardar
-      </button>
-      <button
-        type="button"
-        onClick={onClose}
-        className="bg-gray-400 text-white px-4 py-2 rounded ml-2"
-      >
-        Cancelar
-      </button>
-    </form>
+    </div>
   );
 };

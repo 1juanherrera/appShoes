@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { getToken } from "../utils/session";
+import { getToken } from "../store/session";
 
 const ProtectedRoute = ({ children }) => {
   const token = getToken();

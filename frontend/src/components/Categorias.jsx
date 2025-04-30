@@ -39,7 +39,7 @@ export const Categorias = () => {
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold text-center mb-6 text-blue-800">Lista de Categorías</h1>
+      <h1 className="text-3xl font-bold text-center pb-20 text-blue-800 list-categorias">Lista de Categorías</h1>
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {categorias.map((categoria) => (
           <li

@@ -1,5 +1,5 @@
 import request from "../api/apiClient"; // Asegúrate de que la ruta sea correcta
-import { setToken } from "../utils/session";
+import { setToken } from "../store/session";
 
 // Inicia sesión y devuelve los datos del usuario
 export async function login(email, password) {
@@ -35,4 +35,9 @@ export async function getUserData() {
   } else {
     throw new Error(response.error.message || "No autenticado");
   }
+}
+
+
+export const registrarUsuario = async (usuario) => {
+  return await request("/auth/register", "POST", usuario, false);
 }
