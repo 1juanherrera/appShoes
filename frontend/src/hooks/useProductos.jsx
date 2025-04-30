@@ -1,23 +1,9 @@
 import { useState, useEffect } from "react";
-<<<<<<< HEAD
-=======
 import request from "../api/apiClient";
->>>>>>> fef472848a4f9245ac09ce253282d4e5fdf826df
 
 export const useProductos = (initialProductos = []) => {
   const [productos, setProductos] = useState(initialProductos);
   const [filteredProductos, setFilteredProductos] = useState(initialProductos);
-<<<<<<< HEAD
-  const [carrito, setCarrito] = useState(() => {
-    const carritoGuardado = sessionStorage.getItem("carrito");
-    return carritoGuardado ? JSON.parse(carritoGuardado) : [];
-  });
-
-  // Sincronizar el carrito con sessionStorage
-  useEffect(() => {
-    sessionStorage.setItem("carrito", JSON.stringify(carrito));
-  }, [carrito]);
-=======
   const [carrito, setCarrito] = useState([]);
 
   // Obtener el carrito desde el backend al cargar el componente
@@ -37,7 +23,6 @@ export const useProductos = (initialProductos = []) => {
 
     fetchCarrito();
   }, []);
->>>>>>> fef472848a4f9245ac09ce253282d4e5fdf826df
 
   // Sincronizar productos filtrados con productos originales
   useEffect(() => {
@@ -58,29 +43,6 @@ export const useProductos = (initialProductos = []) => {
   };
 
   // Función para agregar un producto al carrito
-<<<<<<< HEAD
-  const agregarAlCarrito = (producto) => {
-    let mensaje = "Producto agregado al carrito";
-    setCarrito((prevCarrito) => {
-      const existe = prevCarrito.find((item) => item.id === producto.id);
-      if (existe) {
-        mensaje = "El producto ya está en el carrito";
-        return prevCarrito;
-      }
-      return [...prevCarrito, producto];
-    });
-    return mensaje; // Devuelve el mensaje correspondiente
-  };
-
-  // Función para eliminar un producto del carrito
-  const eliminarDelCarrito = (id) => {
-    setCarrito((prevCarrito) => prevCarrito.filter((producto) => producto.id !== id));
-  };
-
-  // Función para vaciar el carrito
-  const vaciarCarrito = () => {
-    setCarrito([]);
-=======
   const agregarAlCarrito = async (producto) => {
     try {
       const response = await request(
@@ -134,7 +96,6 @@ export const useProductos = (initialProductos = []) => {
       console.error("Error al vaciar el carrito:", err);
       return "Error al vaciar el carrito";
     }
->>>>>>> fef472848a4f9245ac09ce253282d4e5fdf826df
   };
 
   return {

@@ -28,6 +28,7 @@ export const AdminCategorias = () => {
   const handleEdit = (categoria) => {
     setSelectedCategoria(categoria); // Establece la categoría seleccionada
     setIsFormVisible(true); // Muestra el formulario
+    
   };
 
   return (

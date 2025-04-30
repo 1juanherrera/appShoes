@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Importa useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import { registrarUsuario } from "../auth/authService";
 
 export const Registro = () => {
@@ -14,7 +14,7 @@ export const Registro = () => {
   });
   const [mensaje, setMensaje] = useState(null);
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // Inicializa useNavigate
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,23 +28,27 @@ export const Registro = () => {
 
     try {
       const response = await registrarUsuario(formData);
-      if (response.success) {
-        setMensaje("Usuario registrado exitosamente.");
-        setFormData({
-          nombres: "",
-          apellidos: "",
-          email: "",
-          nombreUsuario: "",
-          contacto: "",
-          direccion: "",
-          contrasena: "",
-        });
-        navigate("/home"); // Redirige al usuario a la página de inicio
-      } else {
-        setError(response.error.message || "Error al registrar el usuario.");
-      }
+      console.log("Respuesta del backend:", response.token);
+
+      // Guardar el token en localStorage
+      localStorage.setItem("token", response.token);
+
+      setMensaje("Usuario registrado exitosamente.");
+      setFormData({
+        nombres: "",
+        apellidos: "",
+        email: "",
+        nombreUsuario: "",
+        contacto: "",
+        direccion: "",
+        contrasena: "",
+      });
+
+      // Redirigir al usuario al home
+      navigate("/home");
     } catch (err) {
-      setError("Ocurrió un error inesperado.");
+      console.error("Error en el registro:", err);
+      setError(err.message || "Ocurrió un error inesperado.");
     }
   };
 
@@ -61,6 +65,7 @@ export const Registro = () => {
               value={formData.nombres}
               onChange={handleChange}
               required
+              autoComplete="given-name"
               className="w-full px-4 py-2 mt-1 border-2 border-gray-300 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -72,6 +77,7 @@ export const Registro = () => {
               value={formData.apellidos}
               onChange={handleChange}
               required
+              autoComplete="family-name"
               className="w-full px-4 py-2 mt-1 border-2 border-gray-300 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -83,6 +89,7 @@ export const Registro = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              autoComplete="email"
               className="w-full px-4 py-2 mt-1 border-2 border-gray-300 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -94,6 +101,7 @@ export const Registro = () => {
               value={formData.nombreUsuario}
               onChange={handleChange}
               required
+              autoComplete="username"
               className="w-full px-4 py-2 mt-1 border-2 border-gray-300 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -105,6 +113,7 @@ export const Registro = () => {
               value={formData.contacto}
               onChange={handleChange}
               required
+              autoComplete="tel"
               className="w-full px-4 py-2 mt-1 border-2 border-gray-300 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -116,6 +125,7 @@ export const Registro = () => {
               value={formData.direccion}
               onChange={handleChange}
               required
+              autoComplete="address"
               className="w-full px-4 py-2 mt-1 border-2 border-gray-300 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -127,6 +137,7 @@ export const Registro = () => {
               value={formData.contrasena}
               onChange={handleChange}
               required
+              autoComplete="current-password"
               className="w-full px-4 py-2 mt-1 border-2 border-gray-300 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -140,7 +151,7 @@ export const Registro = () => {
           </div>
         </form>
         {mensaje && <p className="text-sm text-green-500 mt-4">{mensaje}</p>}
-        {error && <p className="text-sm text-red-500 mt-4">{error}</p>}
+        {error && <p className="text-sm text-red-500 pl-4">{error}</p>}
       </div>
       <div className="mt-4 text-center">
         <p className="text-sm text-gray-600">

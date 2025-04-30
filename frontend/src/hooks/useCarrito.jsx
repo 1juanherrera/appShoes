@@ -36,12 +36,13 @@ export const useCarrito = () => {
 
       if (response.success) {
         setCarrito(response.data.items || []);
+        return "Producto agregado al carrito"; // Mensaje de éxito
       } else {
-        setError(response.error?.message || "Error al agregar el producto al carrito.");
+        return response.error?.message || "Error al agregar el producto al carrito";
       }
     } catch (err) {
-      setError("Error al agregar el producto al carrito.");
-      console.error(err);
+      console.error("Error al agregar el producto al carrito:", err);
+      return "Error al agregar el producto al carrito";
     }
   };
 
@@ -92,8 +93,7 @@ export const useCarrito = () => {
     try {
       const producto = carrito.find((item) => item.producto.id === productoId);
       if (!producto) {
-        setError("Producto no encontrado en el carrito.");
-        return;
+        return "Producto no encontrado en el carrito"; // Mensaje de error
       }
 
       const response = await request(`/carrito/items/${productoId}`, "DELETE", null, true);
@@ -102,12 +102,13 @@ export const useCarrito = () => {
         setCarrito((prevCarrito) =>
           prevCarrito.filter((item) => item.producto.id !== productoId)
         );
+        return "Producto eliminado del carrito"; // Mensaje de éxito
       } else {
-        setError(response.error?.message || "Error al eliminar el producto del carrito.");
+        return response.error?.message || "Error al eliminar el producto del carrito";
       }
     } catch (err) {
-      setError("Error al eliminar el producto del carrito.");
-      console.error(err);
+      console.error("Error al eliminar el producto del carrito:", err);
+      return "Error al eliminar el producto del carrito";
     }
   };
 
@@ -118,12 +119,13 @@ export const useCarrito = () => {
 
       if (response.success) {
         setCarrito([]); // Vaciar el carrito
+        return "Carrito vaciado correctamente"; // Mensaje de éxito
       } else {
-        setError(response.error?.message || "Error al vaciar el carrito.");
+        return response.error?.message || "Error al vaciar el carrito";
       }
     } catch (err) {
-      setError("Error al vaciar el carrito.");
-      console.error(err);
+      console.error("Error al vaciar el carrito:", err);
+      return "Error al vaciar el carrito";
     }
   };
 
@@ -139,5 +141,5 @@ export const useCarrito = () => {
     actualizarCantidad,
     eliminarDelCarrito,
     vaciarCarrito,
-  };
-};
+  }
+}

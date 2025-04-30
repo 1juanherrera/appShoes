@@ -7,9 +7,9 @@ export const Footer = () => {
             <p className="text-sm">
             &copy; {new Date().getFullYear()} appShoes. Todos los derechos reservados.
             </p>
-            <p className="text-sm">
+            <div className="text-sm">
             <p>Desarrollado por <a href="https://juan-herrera.dev" target="_blank" rel="noopener noreferrer">Juan Herrera</a> © Copyright 2025</p>
-            </p>
+            </div>
         </div>
         </footer>
     );

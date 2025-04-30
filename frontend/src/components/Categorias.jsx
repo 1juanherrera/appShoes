@@ -1,38 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Importa useNavigate
-import { listarCategorias } from "../api/categorias";
+import { useCategorias } from "../hooks/usecategorias";
 
 export const Categorias = () => {
-  const [categorias, setCategorias] = useState([]); // Estado para las categorías
-  const [loading, setLoading] = useState(true); // Estado de carga
-  const [error, setError] = useState(null); // Estado de error
-  const navigate = useNavigate(); // Hook para redirigir
 
-  // Obtener todas las categorías al montar el componente
-  useEffect(() => {
-    const fetchCategorias = async () => {
-      try {
-        const response = await listarCategorias();
-        if (response.success) {
-          setCategorias(response.data); // Guardar las categorías en el estado
-        } else {
-          throw new Error(response.error.message || "Error al obtener categorías");
-        }
-      } catch (err) {
-        console.error("Error al obtener categorías:", err.message);
-        setError(err.message);
-      } finally {
-        setLoading(false); // Finalizar la carga
-      }
-    };
+  const { categorias, loading, error, handleCategoriaClick } = useCategorias(); 
 
-    fetchCategorias();
-  }, []);
-
-  // Manejar clic en una categoría para redirigir a la página de productos
-  const handleCategoriaClick = (id) => {
-    navigate(`/productos/categoria/${id}`); // Redirige al enlace con el ID de la categoría
-  };
 
   if (loading) return <p>Cargando...</p>;
   if (error) return <p>Error: {error}</p>;

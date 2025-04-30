@@ -21,27 +21,33 @@ export const Navbar = () => {
         <h1 className="text-xl font-bold text-white">
           <Link to="/home" className="text-white">AppShoes</Link>
         </h1>
-        <ul className="space-x-4 flex flex-wrap m-5 justify-around w-5/12">
+        <ul className="space-x-4 flex flex-wrap m-5 justify-around w-6/12">
           <li>
-            <Link to="/home" className="hover:underline text-white cursor-pointer flex justify-center items-center text-3xl">
+            <Link to="/home" className="hover:underline text-white cursor-pointer flex justify-center items-center text-2xl">
               <FiHome />
               <span className="ml-2">Inicio</span>
             </Link>
           </li>
           <li>
-            <Link to="/categorias" className="hover:underline text-white cursor-pointer flex justify-center items-center text-3xl">
+            <Link to="/categorias" className="hover:underline text-white cursor-pointer flex justify-center items-center text-2xl">
               <BiCategoryAlt />
               <span className="ml-2">Categorías</span>
             </Link>
           </li>
           {isAdmin && ( // Verifica si isAdmin es true
             <li>
-              <Link to="/admin" className="admin hover:underline cursor-pointer flex justify-center items-center text-3xl">
+              <Link to="/admin" className="admin hover:underline cursor-pointer flex justify-center items-center text-2xl">
                 <MdOutlineAdminPanelSettings />
                 <span className="ml-2">Admin</span>
               </Link>
             </li>
           )}
+          <li>
+            <Link to="/ordenes" className="hover:underline text-white cursor-pointer flex justify-center items-center text-2xl">
+              <BiCategoryAlt />
+              <span className="ml-2">Ordenes</span>
+            </Link>
+          </li>
         </ul>
         <ul className="flex justify-end items-center w-xs text-3xl">
           <li>

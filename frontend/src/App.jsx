@@ -15,96 +15,115 @@ import { ProductosCategoria } from "./components/ProductosCategoria";
 import { Carrito } from "./components/Carrito";
 import { Admin } from "./pages/Admin";
 import { Registro } from "./pages/Registro";
+import { OrdenCompra } from "./pages/OrdenCompra";
 
 export const App = () => {
   return (
-    <div className="d-flex flex-column min-vh-100"> {/* Contenedor principal */}
-      <Router>
-        <Navbar /> {/* Navbar siempre visible */}
-        <div className="flex-grow-1"> {/* Contenido dinámico */}
-          <Routes>
-            {/* Rutas públicas */}
-            <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Registro />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/error" element={<Error />} />
+    <Router>
+      <Routes>
+        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Registro />} />
+        <Route path="/home" element={
+          <>
+            <Navbar />
+            <Home />
+          </>
+        } />
+        <Route path="/error" element={<Error />} />
 
-            {/* Rutas protegidas */}
-            <Route
-              path="/admin/usuarios"
-              element={
-                <ProtectedRoute>
-                  <AdminRoute>
-                    <AdminUsuarios />
-                  </AdminRoute>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/productos"
-              element={
-                <ProtectedRoute>
-                  <AdminRoute>
-                    <AdminProductos />
-                  </AdminRoute>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/categorias"
-              element={
-                <ProtectedRoute>
-                  <AdminRoute>
-                    <AdminCategorias />
-                  </AdminRoute>
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute>
-                  <Admin />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/categorias"
-              element={
-                <ProtectedRoute>
-                  <Categorias />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/productos/categoria/:id"
-              element={
-                <ProtectedRoute>
-                  <ProductosCategoria />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/carrito"
-              element={
-                <ProtectedRoute>
-                  <Carrito />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-        </div>
-        <Footer /> {/* Footer siempre al final */}
-      </Router>
-    </div>
+        {/* Rutas protegidas administrador */}
+        <Route
+          path="/admin/usuarios"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <AdminRoute>
+                <AdminUsuarios />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/productos"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <AdminRoute>
+                <AdminProductos />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/categorias"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <AdminRoute>
+                <AdminCategorias />
+              </AdminRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <Admin />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Rutas protegidas */}
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/categorias"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <Categorias />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/productos/categoria/:id"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <ProductosCategoria />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/carrito"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <Carrito />
+            </ProtectedRoute>
+          }
+        />  
+        <Route
+          path="/ordenes"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <OrdenCompra />
+            </ProtectedRoute>
+          }
+        />  
+      </Routes>
+    </Router>
   );
 };

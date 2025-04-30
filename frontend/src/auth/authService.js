@@ -37,7 +37,11 @@ export async function getUserData() {
   }
 }
 
-
-export const registrarUsuario = async (usuario) => {
-  return await request("/auth/register", "POST", usuario, false);
-}
+export const registrarUsuario = async (formData) => {
+  const response = await request("/auth/register", "POST", formData, false); // Cambia la URL si es necesario
+  if (response.success) {
+    return response.data; // Devuelve el token y los datos del usuario
+  } else {
+    throw new Error(response.error.message || "Error al registrar el usuario.");
+  }
+};

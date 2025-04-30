@@ -3,7 +3,8 @@ import { useLogin } from "../hooks/useLogin";
 
  export const Login = () => {
 
-  const {   email,
+  const {   
+    email,
     setEmail,
     password,
     setPassword,
@@ -20,9 +21,10 @@ import { useLogin } from "../hooks/useLogin";
             <label className="block text-sm font-medium text-gray-700">Email</label>
             <input
               type="email"
-              value={email}
+              value={email} 
               onChange={(e) => setEmail(e.target.value)}
               required
+              autoComplete="email"
               className="w-full px-4 py-2 mt-1 border-2 border-gray-300 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -33,6 +35,7 @@ import { useLogin } from "../hooks/useLogin";
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              autoComplete="current-password"
               className="w-full px-4 py-2 mt-1 border-2 border-gray-300 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -43,8 +46,8 @@ import { useLogin } from "../hooks/useLogin";
             Iniciar Sesión
           </button>
         </form>
-        {error && <p className="text-sm text-red-500">{error}</p>}
-        {success && <p className="text-sm text-green-500">{success}</p>}
+        {error && <p className="text-sm text-red-500 pt-2">{error}</p>}
+        {success && <p className="text-sm text-green-500 pt-2">{success}</p>}
       </div>
       <div className="mt-4 text-center">
         <p className="text-sm text-gray-600">¿No tienes una cuenta? 

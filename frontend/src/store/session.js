@@ -1,16 +1,16 @@
 export function setToken(token) {
   if (!token) {
     console.error("El token es nulo o indefinido.");
-    return; 
-}
+    return;
+  }
 
-  sessionStorage.setItem("token", token);
+  localStorage.setItem("token", token); 
 }
 
 export function getToken() {
-    return sessionStorage.getItem("token");
-  }
-  
+  return localStorage.getItem("token"); 
+}
+
 export function clearToken() {
-    sessionStorage.removeItem("token");
+  localStorage.removeItem("token"); 
 }

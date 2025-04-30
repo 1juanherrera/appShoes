@@ -1,38 +1,40 @@
 import { useEffect } from "react";
 import { FaCheckCircle, FaExclamationCircle, FaTimesCircle } from "react-icons/fa";
 
-export const Message = ({ mensaje, visible, onClose }) => {
+export const Message = ({ mensaje, tipo, visible, onClose }) => {
   useEffect(() => {
     if (visible) {
       const timer = setTimeout(() => {
         onClose();
-      }, 1000);
+      }, 1000); // Cambia el tiempo de visibilidad si es necesario
       return () => clearTimeout(timer);
     }
   }, [visible, onClose]);
 
   if (!visible) return null;
 
-  // Función para determinar el estilo y el ícono dinámicamente
+  // Configuración dinámica según el tipo de mensaje
   const getMessageConfig = () => {
-    if (mensaje === "Producto agregado al carrito") {
-      return {
-        bgColor: "bg-green-500",
-        textColor: "text-green-500",
-        icon: <FaCheckCircle className="text-2xl text-green-500" />,
-      };
-    } else if (mensaje === "El producto ya está en el carrito") {
-      return {
-        bgColor: "bg-yellow-500",
-        textColor: "text-yellow-500",
-        icon: <FaExclamationCircle className="text-2xl text-yellow-500" />,
-      };
-    } else {
-      return {
-        bgColor: "bg-red-500",
-        textColor: "text-red-500",
-        icon: <FaTimesCircle className="text-2xl text-red-500" />,
-      };
+    switch (tipo) {
+      case "success":
+        return {
+          bgColor: "bg-green-500",
+          textColor: "text-green-500",
+          icon: <FaCheckCircle className="text-2xl text-green-500" />,
+        };
+      case "warning":
+        return {
+          bgColor: "bg-yellow-500",
+          textColor: "text-yellow-500",
+          icon: <FaExclamationCircle className="text-2xl text-yellow-500" />,
+        };
+      case "error":
+      default:
+        return {
+          bgColor: "bg-red-500",
+          textColor: "text-red-500",
+          icon: <FaTimesCircle className="text-2xl text-red-500" />,
+        };
     }
   };
 
@@ -41,8 +43,7 @@ export const Message = ({ mensaje, visible, onClose }) => {
   return (
     <div className="fixed top-4 right-4 rounded-2xl shadow-lg z-index-50 bg-white">
       {/* Encabezado con color dinámico */}
-      <div className={`text-white ${bgColor} flex justify-end p-1 w-full h-5 rounded-t-2xl`}>
-      </div>
+      <div className={`text-white ${bgColor} flex justify-end p-1 w-full h-5 rounded-t-2xl`}></div>
 
       {/* Cuerpo del mensaje con ícono y texto dinámicos */}
       <div className="flex justify-center items-center p-2">

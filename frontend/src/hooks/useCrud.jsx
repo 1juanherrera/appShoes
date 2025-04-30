@@ -90,5 +90,49 @@ export const useCrud = (endpoint, customActions = {}) => {
     listar();
   }, [endpoint]);
 
-  return { items, loading, error, crear, actualizar, eliminar, listar };
+  const eliminarFisicamente = async (id) => {
+    try {
+      const response = await request(`${endpoint}/${id}/force`, "DELETE", null, true);
+
+      if (response.success) {
+        setItems((prev) => prev.filter((item) => item.id !== id));
+      } else {
+        throw new Error(response.error?.message || "Error al eliminar físicamente.");
+      }
+
+      return response;
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
+    }
+  };
+
+  useEffect(() => {
+    listar();
+  }, [endpoint]);
+
+  const toggleActivo = async (id, activo) => {
+    try {
+      // Determina la acción a realizar (activar o inactivar)
+      const endpointAction = activo ? `${endpoint}/${id}` : `${endpoint}/${id}/reactivar`;
+      const method = activo ? "DELETE" : "PATCH";
+  
+      const response = await request(endpointAction, method, null, true);
+  
+      if (response.success) {
+        setItems((prev) =>
+          prev.map((item) => (item.id === id ? { ...item, activo: !activo } : item))
+        );
+      } else {
+        throw new Error(response.error?.message || "Error al cambiar el estado del producto.");
+      }
+  
+      return response;
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
+    }
+  };
+
+  return { items, loading, error, crear, actualizar, eliminar, listar, eliminarFisicamente, toggleActivo };
 };
