@@ -1,0 +1,18 @@
+INSERT INTO `productos` (`id_prod`, `activo`, `descripcion`, `imagen`, `nombre`, `precio`, `stock`, `categoria_id`) VALUES
+(1, b'1', 'Tenis Adidas Galaxy 6 con diseño moderno y suela amortiguada para mayor comodidad diaria.', 'https://acortar.link/k0zGts', 'Tenis Adidas Galaxy 6', 90.99, 50, 6),
+(2, b'1', 'Zapatillas Adidas Ultraboost con tejido Primeknit y suela Boost para máximo confort y rendimiento.', 'https://acortar.link/mVMIXJ', 'Zapatillas Adidas Ultraboost', 119.00, 23, 6),
+(3, b'1', 'Zapatos Nike Downshifter 13, ligeras y transpirables para mayor comodidad en cada paso.', 'https://acortar.link/jxEu1U', 'Nike Downshifter 13', 79.99, 23, 5),
+(4, b'1', 'Zapatillas ligeras y transpirables para correr largas distancias.', 'https://acortar.link/t3HCE0', 'Zapatos New Balance Running', 59.99, 100, 1),
+(5, b'1', 'Zapatos versátiles para entrenamientos en el gimnasio.', 'https://acortar.link/ZVOIfP', 'Zapatos Asics Entrenamiento', 49.99, 0, 1),
+(6, b'1', 'Zapatos elegantes de cuero genuino para ocasiones formales.', 'https://acortar.link/VZds3z', 'Zapatos Formales Arturo Calle', 99.99, 40, 2),
+(7, b'1', 'Zapatos clásicos Oxford en color negro.', 'https://acortar.link/ghiiqy', 'Zapatos Oxford Negros', 89.99, 30, 2),
+(8, b'1', 'Guayos de alto rendimiento para fútbol, con diseño Predator.', 'https://acortar.link/l67wak', 'Guayos Adidas Predator', 149.99, 0, 6),
+(9, b'1', 'Guayos ligeros y veloces para jugadores de fútbol.', 'https://acortar.link/kmApyO', 'Guayos Nike Mercurial', 139.99, 20, 5),
+(10, b'1', 'Mocasines elegantes hechos de cuero marrón.', 'https://acortar.link/yr6YHw', 'Mocasines de Cuero Marrón', 79.99, 0, 4),
+(11, b'1', 'Mocasines clásicos en color negro para ocasiones formales.', 'https://acortar.link/7j5Uh8', 'Mocasines Negros Elegantes', 89.99, 40, 4),
+(12, b'1', 'Zapatillas icónicas de New Balance con estilo retro.', 'https://acortar.link/g5ti7R', 'Zapatillas New Balance 574', 99.99, 60, 7),
+(13, b'1', 'Zapatillas cómodas con tecnología Fresh Foam para correr.', 'https://acortar.link/XS6tLb', 'Zapatillas New Balance Fresh Foam', 109.99, 50, 7),
+(14, b'1', 'Zapatillas cómodas con tecnología Fresh Foam para correr.', 'https://acortar.link/YcY4GX', 'Guayos Mercurial Superfly 10', 109.99, 0, 5),
+(15, b'1', 'Velocidad explosiva y ajuste perfecto con los Mercurial Superfly 10, diseñados para jugadores que dominan el ritmo del juego.', 'https://acortar.link/axU27Y', 'Zapatillas Nike Revolution', 79.99, 90, 5),
+(16, b'1', 'Zapatillas modernas con diseño audaz de Puma.', 'https://acortar.link/e2MVnv', 'Zapatillas Puma RS-X', 119.99, 50, 8),
+(28, b'1', '	 Zapatillas clásicas de gamuza de Puma. ', 'https://acortar.link/SykPGs', ' Zapatillas Puma Suede', 89.99, 19, 8);
