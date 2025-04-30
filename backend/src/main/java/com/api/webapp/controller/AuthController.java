@@ -3,7 +3,6 @@ package com.api.webapp.controller;
 import com.api.webapp.model.dto.request.LoginRequestDTO;
 import com.api.webapp.model.dto.request.RegistroUsuarioRequestDTO;
 import com.api.webapp.model.dto.response.JwtResponseDTO;
-import com.api.webapp.model.dto.response.UsuarioResponseDTO;
 import com.api.webapp.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
