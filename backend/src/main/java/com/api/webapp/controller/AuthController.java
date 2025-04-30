@@ -22,9 +22,9 @@ public class AuthController {
     private final UsuarioService usuarioService;
 
     @PostMapping("/register")
-    public ResponseEntity<UsuarioResponseDTO> registrarUsuario(@Valid @RequestBody RegistroUsuarioRequestDTO registroRequest) {
-        UsuarioResponseDTO usuarioCreado = usuarioService.registrarUsuario(registroRequest);
-        return new ResponseEntity<>(usuarioCreado, HttpStatus.CREATED);
+    public ResponseEntity<JwtResponseDTO> registrarUsuario(@Valid @RequestBody RegistroUsuarioRequestDTO registroRequest) {
+        JwtResponseDTO jwtResponse = usuarioService.registrarUsuario(registroRequest);
+        return new ResponseEntity<>(jwtResponse, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")

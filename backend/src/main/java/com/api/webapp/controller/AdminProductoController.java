@@ -39,6 +39,12 @@ public class AdminProductoController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/{id}/force")
+    public ResponseEntity<Void> eliminarFisicamenteProducto(@PathVariable Long id) {
+        productoService.eliminarFisicamenteProducto(id); // Eliminación física
+        return ResponseEntity.noContent().build();
+    }
+
     @PatchMapping("/{id}/reactivar") // PATCH para la accion especifica de reactivar
     public ResponseEntity<ProductoResponseDTO> reactivarProducto(@PathVariable Long id) {
         ProductoResponseDTO productoReactivado = productoService.reactivarProducto(id);

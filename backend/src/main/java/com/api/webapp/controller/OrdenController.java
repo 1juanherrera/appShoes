@@ -36,7 +36,7 @@ public class OrdenController {
         return ResponseEntity.ok(ordenes);
     }
 
-    // obtener una orden especifica por ID (dueño o admin)
+    // obtener una orden especifica por ID (Admin)
     @GetMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<OrdenResponseDTO> obtenerOrdenPorId(

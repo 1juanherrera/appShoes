@@ -12,6 +12,8 @@ public interface ProductoService {
 
     void eliminarProducto(Long id); // Admin
 
+    void eliminarFisicamenteProducto(Long id);
+
     ProductoResponseDTO reactivarProducto(Long id); //admin
 
     ProductoResponseDTO obtenerProductoPorId(Long id);

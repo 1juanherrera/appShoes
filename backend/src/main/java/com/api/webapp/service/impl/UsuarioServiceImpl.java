@@ -29,30 +29,43 @@ public class UsuarioServiceImpl implements UsuarioService {
         private final JwtService jwtService;
         private final AuthenticationManager authenticationManager;
 
-    @Override
-    @Transactional
-    public UsuarioResponseDTO registrarUsuario(RegistroUsuarioRequestDTO registroRequest) {
-        if (usuarioRepository.existsByEmail(registroRequest.getEmail())) {
-            throw new EmailAlreadyExistsException("El email ya está registrado: " + registroRequest.getEmail());
+        @Override
+        @Transactional
+        public JwtResponseDTO registrarUsuario(RegistroUsuarioRequestDTO registroRequest) {
+            // Verificar si el email o nombre de usuario ya existen
+            if (usuarioRepository.existsByEmail(registroRequest.getEmail())) {
+                throw new EmailAlreadyExistsException("El email ya está registrado: " + registroRequest.getEmail());
+            }
+            if (usuarioRepository.existsByNombreUsuario(registroRequest.getNombreUsuario())) {
+                throw new UsernameAlreadyExistsException("El nombre de usuario ya está en uso: " + registroRequest.getNombreUsuario());
+            }
+        
+            // Crear un nuevo usuario
+            Usuario nuevoUsuario = Usuario.builder()
+                    .nombres(registroRequest.getNombres())
+                    .apellidos(registroRequest.getApellidos())
+                    .email(registroRequest.getEmail())
+                    .nombreUsuario(registroRequest.getNombreUsuario())
+                    .contacto(registroRequest.getContacto())
+                    .direccion(registroRequest.getDireccion())
+                    .contrasena(passwordEncoder.encode(registroRequest.getContrasena()))
+                    .rol(Rol.USUARIO)
+                    .build();
+        
+            // Guardar el usuario en la base de datos
+            Usuario usuarioGuardado = usuarioRepository.save(nuevoUsuario);
+        
+            // Generar un token JWT para el usuario registrado
+            String jwtToken = jwtService.generateToken(usuarioGuardado);
+        
+            // Devolver el token y los datos del usuario
+            return JwtResponseDTO.builder()
+                    .token(jwtToken)
+                    .nombreUsuario(usuarioGuardado.getNombreUsuario())
+                    .email(usuarioGuardado.getEmail())
+                    .rol(usuarioGuardado.getRol())
+                    .build();
         }
-        if (usuarioRepository.existsByNombreUsuario(registroRequest.getNombreUsuario())) {
-            throw new UsernameAlreadyExistsException("El nombre de usuario ya está en uso: " + registroRequest.getNombreUsuario());
-        }
-
-        Usuario nuevoUsuario = Usuario.builder()
-                .nombres(registroRequest.getNombres())
-                .apellidos(registroRequest.getApellidos())
-                .email(registroRequest.getEmail())
-                .nombreUsuario(registroRequest.getNombreUsuario())
-                .contacto(registroRequest.getContacto())
-                .direccion(registroRequest.getDireccion())
-                .contrasena(passwordEncoder.encode(registroRequest.getContrasena()))
-                .rol(Rol.USUARIO)
-                .build();
-
-        Usuario usuarioGuardado = usuarioRepository.save(nuevoUsuario);
-        return mapUsuarioToUsuarioResponseDTO(usuarioGuardado);
-    }
 
     @Override
     @Transactional

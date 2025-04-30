@@ -79,6 +79,16 @@ public class ProductoServiceImpl implements ProductoService {
         logger.info("Producto con ID: {} marcado como inactivo.", id);
     }
 
+    @Override
+    @Transactional
+    public void eliminarFisicamenteProducto(Long id) {
+        Producto producto = productoRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Producto", "id", id));
+
+        productoRepository.delete(producto); // Elimina físicamente el producto
+        logger.info("Producto con ID: {} eliminado físicamente.", id);
+    }
+
     // Reactiva un producto marcado como inactivo
     @Override
     @Transactional

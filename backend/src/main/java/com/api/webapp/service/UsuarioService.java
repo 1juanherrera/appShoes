@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface UsuarioService {
 
-    UsuarioResponseDTO registrarUsuario(RegistroUsuarioRequestDTO registroRequest);
+    JwtResponseDTO registrarUsuario(RegistroUsuarioRequestDTO registroRequest);
 
     UsuarioResponseDTO actualizarUsuario(Long id, UsuarioUpdateRequestDTO updateRequest);
 
