@@ -4,6 +4,7 @@ import com.api.webapp.model.entity.Orden;
 import com.api.webapp.model.entity.Usuario;
 import com.api.webapp.model.enums.EstadoOrden;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,4 +19,7 @@ public interface OrdenRepository extends JpaRepository<Orden, Long> {
 
     // Busca órdenes por estado (útil para el administrador)
     List<Orden> findByEstado(EstadoOrden estado);
+
+    @Query("SELECT o FROM Orden o JOIN FETCH o.usuario")
+    List<Orden> findAllWithUsuario();
 }

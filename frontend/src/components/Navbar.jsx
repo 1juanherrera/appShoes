@@ -5,11 +5,13 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { FiHome } from "react-icons/fi";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import Logout from "./Logout";
-import { useGetUsersData } from "../hooks/useGetusersData";
+import { FiShoppingBag } from "react-icons/fi";
+import { useUserData } from "../hooks/useUserData";
 
 export const Navbar = () => {
 
-  const { user, isAdmin } = useGetUsersData();
+  const { user, isAdmin } = useUserData();
+
 
   if (!user) {
     return <p>Cargando datos del usuario...</p>;
@@ -44,7 +46,7 @@ export const Navbar = () => {
           )}
           <li>
             <Link to="/ordenes" className="hover:underline text-white cursor-pointer flex justify-center items-center text-2xl">
-              <BiCategoryAlt />
+              <FiShoppingBag />
               <span className="ml-2">Ordenes</span>
             </Link>
           </li>

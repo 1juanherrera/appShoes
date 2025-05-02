@@ -1,10 +1,10 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useGetUsersData } from "../hooks/useGetusersData";
+import { useUserData } from "../hooks/useUserData";
 import { getToken } from "../store/session";
 
 const AdminRoute = ({ children }) => {
-  const { user } = useGetUsersData();
+  const { user } = useUserData();
   const token = getToken();
 
   if ( !token && !user && user.rol != "ADMINISTRADOR") {

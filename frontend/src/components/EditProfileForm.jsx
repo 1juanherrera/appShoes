@@ -1,20 +1,17 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { registrarUsuario } from "../services/authService";
+import { useState } from "react";
+import { useUserData } from "../hooks/useUserData";
 
-export const Registro = () => {
+export const EditProfileForm = ({ user, onClose }) => {
+  const { updateUser } = useUserData();
   const [formData, setFormData] = useState({
-    nombres: "",
-    apellidos: "",
-    email: "",
-    nombreUsuario: "",
-    contacto: "",
-    direccion: "",
-    contrasena: "",
+    nombres: user.nombres || "",
+    apellidos: user.apellidos || "",
+    email: user.email || "",
+    nombreUsuario: user.nombreUsuario || "",
+    contacto: user.contacto || "",
+    direccion: user.direccion || "",
+    contrasena: "", // Inicializa la contraseña como vacía
   });
-  const [mensaje, setMensaje] = useState(null);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,40 +20,22 @@ export const Registro = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMensaje(null);
-    setError(null);
-
-    try {
-      const response = await registrarUsuario(formData);
-      console.log("Respuesta del backend:", response.token);
-
-      // Guardar el token en localStorage
-      localStorage.setItem("token", response.token);
-
-      setMensaje("Usuario registrado exitosamente.");
-      setFormData({
-        nombres: "",
-        apellidos: "",
-        email: "",
-        nombreUsuario: "",
-        contacto: "",
-        direccion: "",
-        contrasena: "",
-      });
-
-      // Redirigir al usuario al home
-      navigate("/home");
-    } catch (err) {
-      console.error("Error en el registro:", err);
-      setError(err.message || "Ocurrió un error inesperado.");
+  
+    const dataToSend = { ...formData };
+    if (!formData.contrasena) {
+      delete dataToSend.contrasena; // Elimina la contraseña si está vacía
     }
+  
+    const updatedUser = await updateUser(dataToSend); // Supón que `updateUser` devuelve los datos actualizados
+    alert("Perfil actualizado con éxito.");
+    onClose(updatedUser); // Devuelve los datos actualizados al componente padre
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 flex-col p-4">
-      <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">Registro de Usuario</h2>
-      <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
-        <form autoComplete="off" onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+    <div className="flex items-center justify-center bg-gray-50 flex-col separador">
+      <h2 className="text-3xl font-bold text-center text-gray-800">Editar Perfil</h2>
+      <div className="bg-white shadow-lg rounded-lg p-4 mt-0">
+        <form autoComplete="off" onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700">Nombres</label>
             <input
@@ -130,36 +109,33 @@ export const Registro = () => {
             />
           </div>
           <div className="col-span-1 md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700">Contraseña</label>
+            <label className="block text-sm font-medium text-gray-700">Nueva Contraseña</label>
             <input
               type="password"
               name="contrasena"
               value={formData.contrasena}
               onChange={handleChange}
-              required
-              autoComplete="current-password"
+              autoComplete="new-password"
+              placeholder="Dejar en blanco para no cambiar"
               className="w-full px-4 py-2 mt-1 border-2 border-gray-300 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          <div className="col-span-1 md:col-span-2">
+          <div className="col-span-1 md:col-span-2 flex justify-between">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-2 py-2 bg-gray-500 text-white font-medium rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
+            >
+              Cancelar
+            </button>
             <button
               type="submit"
-              className="w-full px-4 py-2 text-white bg-blue-800 rounded-lg hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-2 py-2 bg-blue-800 text-white font-medium rounded-lg hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              Registrarse
+              Guardar Cambios
             </button>
           </div>
         </form>
-        {mensaje && <p className="text-sm text-green-500 mt-4">{mensaje}</p>}
-        {error && <p className="text-sm text-red-500 pl-4">{error}</p>}
-      </div>
-      <div className="mt-4 text-center">
-        <p className="text-sm text-gray-600">
-          ¿Ya tienes una cuenta?{" "}
-          <Link to="/login" className="text-blue-800 hover:underline">
-            Inicia sesión
-          </Link>
-        </p>
       </div>
     </div>
   );

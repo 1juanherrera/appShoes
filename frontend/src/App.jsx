@@ -16,6 +16,7 @@ import { Carrito } from "./components/Carrito";
 import { Admin } from "./pages/Admin";
 import { Registro } from "./pages/Registro";
 import { OrdenCompra } from "./pages/OrdenCompra";
+import { AdminOrdenes } from "./components/AdminOrdenes";
 
 export const App = () => {
   return (
@@ -29,6 +30,7 @@ export const App = () => {
           <>
             <Navbar />
             <Home />
+            <Footer /> {/* Agrega el Footer aquí */}
           </>
         } />
         <Route path="/error" element={<Error />} />
@@ -73,6 +75,15 @@ export const App = () => {
             <ProtectedRoute>
               <Navbar />
               <Admin />
+            </ProtectedRoute>
+          }
+        />
+           <Route
+          path="/admin/ordenes"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <AdminOrdenes />
             </ProtectedRoute>
           }
         />

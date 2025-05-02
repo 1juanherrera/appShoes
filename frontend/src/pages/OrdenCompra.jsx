@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { listarMisOrdenes } from "../services/ordenServices";
 import { DetalleOrden } from "../components/DetalleOrden";
+import { getEstadoColor } from "../utils/getColor";
 
 export const OrdenCompra = () => {
   const [ordenes, setOrdenes] = useState([]);
@@ -23,7 +24,7 @@ export const OrdenCompra = () => {
 
   const handleVerDetalles = (ordenId) => {
     setOrdenSeleccionada(ordenId); // Establece la orden seleccionada
-  };
+  }
 
   const handleCerrarDetalles = () => {
     setOrdenSeleccionada(null); // Cierra el componente de detalles
@@ -52,7 +53,7 @@ export const OrdenCompra = () => {
                 <td className="border px-4 py-2">{orden.id}</td>
                 <td className="border px-4 py-2"> {new Date(orden.fecha).toLocaleDateString()} {new Date(orden.fecha).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
                 <td className="border px-4 py-2 ">
-                  <div className="bg-yellow-500 p-1 cursor-pointer text-center rounded-xl font-semibold text-white">
+                  <div className={`${getEstadoColor(orden.estado)} p-1 cursor-pointer text-center rounded-xl font-semibold text-white`}>
                   {orden.estado}
                   </div>
                 </td>

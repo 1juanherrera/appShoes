@@ -20,7 +20,7 @@ public class Orden {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "usuario_id", foreignKey = @ForeignKey(name = "fk_orden_usuario"), nullable = false)
     @ToString.Exclude
     private Usuario usuario;

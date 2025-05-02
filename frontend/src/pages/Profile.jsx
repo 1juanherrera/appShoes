@@ -1,25 +1,40 @@
-import { useGetUsersData } from "../hooks/useGetusersData";
+import { useState } from "react";
+import { useUserData } from "../hooks/useUserData";
+import { EditProfileForm } from "../components/EditProfileForm";
 
 export const Profile = () => {
+  const { user, error, isLoading, refetchUserData } = useUserData(); // Asegúrate de que `refetchUserData` esté disponible
+  const [isEditing, setIsEditing] = useState(false);
 
-  const { user, error } = useGetUsersData();
-  
+  const handleProfileUpdate = () => {
+    refetchUserData(); // Recarga los datos del usuario desde el backend
+    setIsEditing(false); // Cierra el formulario de edición
+  };
 
-  if (error) {
-    return <p className="text-red-500">{error}</p>; // Muestra un mensaje de error si ocurre
-  }
-
-  if (!user) {
-    return <p>Cargando datos del usuario...</p>; // Muestra un mensaje de carga mientras se obtienen los datos
-  }
+  if (isLoading) return <p>Cargando...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold">Gestión de Usuarios</h1>
-      <p>Bienvenido, {user.nombres} ({user.email})</p>
-      <p>{user.contacto} {user.direccion} {user.nombreUsuario}</p>
-      <p>{user.rol}</p>
-      <p>Aquí puedes gestionar los usuarios.</p>
-    </div>
+    <>
+      {!isEditing ? (
+        <div className="max-w-md mx-auto p-5 bg-white shadow-md rounded-lg">
+          <h1 className="text-2xl font-bold mb-4">Mi Perfil</h1>
+          <p><strong>Nombre:</strong> {user.nombres}</p>
+          <p><strong>Apellidos:</strong> {user.apellidos}</p>
+          <p><strong>Email:</strong> {user.email}</p>
+          <p><strong>Nombre de Usuario:</strong> {user.nombreUsuario}</p>
+          <p><strong>Contacto:</strong> {user.contacto}</p>
+          <p><strong>Dirección:</strong> {user.direccion}</p>
+          <button
+            onClick={() => setIsEditing(true)}
+            className="mt-4 px-4 py-2 bg-blue-600 text-white font-medium rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Editar Perfil
+          </button>
+        </div>
+      ) : (
+        <EditProfileForm user={user} onClose={handleProfileUpdate} />
+      )}
+    </>
   );
 };

@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useCarrito } from "../hooks/useCarrito";
-import { crearOrden } from "../services/ordenServices"; // Importa el servicio para crear la orden
-import { useNavigate } from "react-router-dom"; // Para redirigir al usuario
+import { crearOrden } from "../services/ordenServices"; 
+import { useNavigate } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 import { Message } from "./Message";
 
 export const Carrito = () => {
+
   const {
     carrito,
     loading,
@@ -19,16 +20,16 @@ export const Carrito = () => {
   const [mensaje, setMensaje] = useState("");
   const [mensajeVisible, setMensajeVisible] = useState(false);
   const [tipoMensaje, setTipoMensaje] = useState("success");
-  const navigate = useNavigate(); // Hook para redirigir
+  const navigate = useNavigate();
 
   const handleCrearOrden = async () => {
     try {
-      const respuesta = await crearOrden(); // Llama al servicio para crear la orden
+      const respuesta = await crearOrden();
       setMensaje("Orden creada con éxito");
       setTipoMensaje("success");
       setMensajeVisible(true);
       setTimeout(() => {
-        navigate("/ordenes"); // Redirige a la página de órdenes
+        navigate("/ordenes");
       }, 2000);
     } catch (err) {
       setMensaje(err.response?.data?.message || "Error al crear la orden");
@@ -79,7 +80,7 @@ export const Carrito = () => {
               <img
                 src={item.producto.imagen}
                 alt={item.producto.nombre}
-                className="w-full h-40 object-cover rounded-lg mb-4"
+                className="min-w-full h-50 object-cover mb-4"
               />
               <p className="text-gray-600 mb-4">{item.producto.descripcion}</p>
 
@@ -130,22 +131,20 @@ export const Carrito = () => {
         </div>
       )}
 
-      <div className="flex justify-between mt-6">
         <button
           onClick={handleVaciarCarrito}
-          className="bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors px-4 py-2 flex items-center"
+          className="bg-red-600 fixed bottom-5 flex-col left-2 text-white hover:bg-red-700 w-20 h-20 rounded-circle flex items-center justify-center"
         >
-          <FaTrashAlt size={15} />
-          <span className="ml-2">Vaciar Carrito</span>
+          <FaTrashAlt size={25} />
+          <span className="text-md">Vaciar</span>
         </button>
         <button
           onClick={handleCrearOrden}
-          className="bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors px-4 py-2 flex items-center"
+          className="bg-blue-600 fixed bottom-5 flex-col right-2 text-white hover:bg-blue-700 w-20 h-20 rounded-circle flex items-center justify-center"
         >
-          <IoMdAdd size={30} className="pr-2"/>
-          Crear Orden
+          <IoMdAdd size={35}/>
+          <span className="">Orden</span>
         </button>
       </div>
-    </div>
-  );
-};
+  )
+}

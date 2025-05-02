@@ -3,7 +3,7 @@ import { useCrud } from "../hooks/useCrud";
 import { UsuarioAdminList } from "./UsuarioAdminList";
 
 export const AdminUsuarios = () => {
-  const { items, crear, actualizar, eliminar, error, loading } = useCrud("/admin/usuarios");
+  const { items, crear, actualizar, eliminar, error } = useCrud("/admin/usuarios");
   const [selectedUsuario, setSelectedUsuario] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -21,6 +21,8 @@ export const AdminUsuarios = () => {
     setSelectedUsuario(usuario);
     setIsFormVisible(true);
   };
+
+  console.log("items", items);
 
   return (
     <div className="container mx-auto p-6">

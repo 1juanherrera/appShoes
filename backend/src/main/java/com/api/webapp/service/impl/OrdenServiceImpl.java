@@ -5,6 +5,7 @@ import com.api.webapp.exception.ResourceNotFoundException;
 import com.api.webapp.model.dto.request.OrdenStatusUpdateRequestDTO;
 import com.api.webapp.model.dto.response.DetalleOrdenResponseDTO;
 import com.api.webapp.model.dto.response.OrdenResponseDTO;
+import com.api.webapp.model.dto.response.UsuarioResponseDTO;
 import com.api.webapp.model.entity.*;
 import com.api.webapp.model.enums.EstadoOrden;
 import com.api.webapp.repository.*;
@@ -123,7 +124,7 @@ public class OrdenServiceImpl implements OrdenService {
     @Override
     @Transactional(readOnly = true)
     public List<OrdenResponseDTO> listarTodasLasOrdenes() {
-        return ordenRepository.findAll()
+        return ordenRepository.findAllWithUsuario()
                 .stream()
                 .map(this::mapOrdenToOrdenResponseDTO)
                 .collect(Collectors.toList());
@@ -176,12 +177,22 @@ public class OrdenServiceImpl implements OrdenService {
                 .map(this::mapDetalleOrdenToResponseDTO)
                 .collect(Collectors.toList());
 
+        UsuarioResponseDTO usuarioDTO = null;
+            if (orden.getUsuario() != null) {
+                usuarioDTO = UsuarioResponseDTO.builder()
+                        .id(orden.getUsuario().getId())
+                        .nombres(orden.getUsuario().getNombres())
+                        .apellidos(orden.getUsuario().getApellidos())
+                        .email(orden.getUsuario().getEmail())
+                        .build();
+                    }
+
         return OrdenResponseDTO.builder()
                 .id(orden.getId())
                 .total(orden.getTotal())
                 .estado(orden.getEstado())
                 .fecha(orden.getFecha())
-                .usuarioId(orden.getUsuario() != null ? orden.getUsuario().getId() : null) // Check null usuario
+                .usuario(usuarioDTO) // Check null usuario
                 .detalles(detallesDTO)
                 .build();
     }

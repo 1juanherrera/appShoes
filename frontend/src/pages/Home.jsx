@@ -1,9 +1,9 @@
 import { ListaProductos } from "../components/ListaProductos";
-import { useGetUsersData } from "../hooks/useGetusersData";
+import { useUserData } from "../hooks/useUserData";
 
 export const Home = () => {
 
-   const { user } = useGetUsersData();
+   const { user } = useUserData();
 
    if (!user) {
     // Muestra un mensaje de carga mientras los datos del usuario se obtienen

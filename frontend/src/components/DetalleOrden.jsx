@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { obtenerOrdenPorId } from "../services/ordenServices";
 import { IoCloseSharp } from "react-icons/io5";
+import { getEstadoColor } from "../utils/getColor";
 
 export const DetalleOrden = ({ ordenId, onClose }) => {
   const [orden, setOrden] = useState(null); // Almacena la orden completa
@@ -44,7 +45,7 @@ export const DetalleOrden = ({ ordenId, onClose }) => {
           <h2 className="text-2xl font-bold">Detalles de la Orden #{ordenId}</h2>
           <div className="text-gray-600 flex items-center mt-2 pb-2">
             <span className="pr-3">Estado:</span>
-            <div className="bg-yellow-500 p-1 w-40 cursor-pointer text-center rounded-xl font-semibold text-white">
+            <div className={`${getEstadoColor(orden.estado)} p-1 w-40 cursor-pointer text-center rounded-xl font-semibold text-white`}>
                   {orden.estado}
           </div>
           </div>

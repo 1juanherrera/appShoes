@@ -16,6 +16,6 @@ public class OrdenResponseDTO {
     private Double total;
     private EstadoOrden estado;
     private OffsetDateTime fecha;
-    private Long usuarioId;
+    private UsuarioResponseDTO usuario;
     private List<DetalleOrdenResponseDTO> detalles;
 }

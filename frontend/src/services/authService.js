@@ -44,4 +44,16 @@ export const registrarUsuario = async (formData) => {
   } else {
     throw new Error(response.error.message || "Error al registrar el usuario.");
   }
-};
+}
+
+// Actualiza los datos del usuario autenticado
+export async function updateUserData(updatedData) {
+  const response = await request("/usuarios/me", "PUT", updatedData, true);
+
+  if (response.success) {
+    return response.data; // Devuelve los datos actualizados del usuario
+  } else {
+    throw new Error(response.error.message || "Error al actualizar los datos del usuario");
+  }
+}
+

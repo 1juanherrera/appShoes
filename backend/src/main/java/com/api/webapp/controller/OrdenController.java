@@ -43,9 +43,13 @@ public class OrdenController {
             @PathVariable Long id,
             @AuthenticationPrincipal Usuario usuario) {
         OrdenResponseDTO orden = ordenService.obtenerOrdenPorId(id);
-        if (!orden.getUsuarioId().equals(usuario.getId()) && !usuario.getRol().name().equals("ADMINISTRADOR")) {
+    
+        // Verifica si el usuario autenticado tiene permiso para ver la orden
+        if (!orden.getUsuario().getId().equals(usuario.getId()) && 
+            !usuario.getRol().name().equals("ADMINISTRADOR")) {
             throw new org.springframework.security.access.AccessDeniedException("No tiene permiso para ver esta orden.");
         }
+    
         return ResponseEntity.ok(orden);
     }
 
