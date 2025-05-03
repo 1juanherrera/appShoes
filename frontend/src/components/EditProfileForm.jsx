@@ -33,7 +33,6 @@ export const EditProfileForm = ({ user, onClose }) => {
 
   return (
     <div className="flex items-center justify-center bg-gray-50 flex-col separador">
-      <h2 className="text-3xl font-bold text-center text-gray-800">Editar Perfil</h2>
       <div className="bg-white shadow-lg rounded-lg p-4 mt-0">
         <form autoComplete="off" onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>

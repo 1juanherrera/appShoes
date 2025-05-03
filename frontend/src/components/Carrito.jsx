@@ -105,7 +105,7 @@ export const Carrito = () => {
                 </button>
               </div>
 
-              <div className="flex items-center">
+              <div className="flex items-center pb-5">
                 <button
                   onClick={() =>
                     actualizarCantidad(item.producto.id, item.cantidad - 1)
@@ -133,17 +133,16 @@ export const Carrito = () => {
 
         <button
           onClick={handleVaciarCarrito}
-          className="bg-red-600 fixed bottom-5 flex-col left-2 text-white hover:bg-red-700 w-20 h-20 rounded-circle flex items-center justify-center"
+          className="bg-red-600 fixed bottom-5 flex-col left-2 text-white hover:bg-red-700 w-15 h-15 rounded-circle flex items-center justify-center"
         >
           <FaTrashAlt size={25} />
-          <span className="text-md">Vaciar</span>
         </button>
         <button
           onClick={handleCrearOrden}
-          className="bg-blue-600 fixed bottom-5 flex-col right-2 text-white hover:bg-blue-700 w-20 h-20 rounded-circle flex items-center justify-center"
+          className="bg-blue-600 fixed bottom-5 right-2 text-white py-2 px-3 rounded-lg hover:bg-blue-700 flex items-center justify-center"
         >
-          <IoMdAdd size={35}/>
-          <span className="">Orden</span>
+          <IoMdAdd size={25}/>
+          <span className="ml-2">Crear orden</span>
         </button>
       </div>
   )

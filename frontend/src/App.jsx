@@ -17,6 +17,7 @@ import { Admin } from "./pages/Admin";
 import { Registro } from "./pages/Registro";
 import { OrdenCompra } from "./pages/OrdenCompra";
 import { AdminOrdenes } from "./components/AdminOrdenes";
+import { DetalleProducto } from "./pages/DetalleProducto";
 
 export const App = () => {
   return (
@@ -134,6 +135,15 @@ export const App = () => {
             </ProtectedRoute>
           }
         />  
+        <Route
+        path="/producto/:id"
+          element={
+            <ProtectedRoute>
+              <Navbar />
+              <DetalleProducto />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );
