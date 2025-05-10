@@ -126,8 +126,3 @@ Optimización de Imágenes:
 Asegúrate de que las imágenes de los productos estén optimizadas para una carga rápida.
 Pruebas del Sistema:
 Realiza pruebas regulares para garantizar que todas las funciones (búsqueda, carrito, etc.) funcionen correctamente.
-9. Contacto de Soporte
-Correo Electrónico: soporte@appshoes.com
-Teléfono: +1 800 123 4567
-Horario de Atención: Lunes a Viernes, de 9:00 AM a 6:00 PM.
-Este manual cubre las funciones principales del sistema de gestión de productos de AppShoes. Si tienes alguna duda o problema, no dudes en contactar al equipo de soporte.
