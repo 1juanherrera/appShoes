@@ -1,4 +1,4 @@
-# Manual de Usuario para la Gestión de Productos en AppShoes
+# APPSHOES
 
 ## Introducción
 Este manual describe cómo utilizar el sistema de gestión de productos de la aplicación **AppShoes**. La aplicación permite a los usuarios visualizar productos, agregar productos al carrito, buscar productos y gestionar el inventario desde el backend.
