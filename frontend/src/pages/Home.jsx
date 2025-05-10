@@ -6,7 +6,6 @@ export const Home = () => {
    const { user } = useUserData();
 
    if (!user) {
-    // Muestra un mensaje de carga mientras los datos del usuario se obtienen
     return <p>Cargando datos del usuario...</p>;
   }
 

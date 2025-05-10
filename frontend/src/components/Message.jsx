@@ -6,14 +6,13 @@ export const Message = ({ mensaje, tipo, visible, onClose }) => {
     if (visible) {
       const timer = setTimeout(() => {
         onClose();
-      }, 1000); // Cambia el tiempo de visibilidad si es necesario
+      }, 1000); 
       return () => clearTimeout(timer);
     }
   }, [visible, onClose]);
 
   if (!visible) return null;
 
-  // Configuración dinámica según el tipo de mensaje
   const getMessageConfig = () => {
     switch (tipo) {
       case "success":
@@ -42,10 +41,8 @@ export const Message = ({ mensaje, tipo, visible, onClose }) => {
 
   return (
     <div className="fixed top-4 right-4 rounded-2xl shadow-lg z-index-50 bg-white">
-      {/* Encabezado con color dinámico */}
       <div className={`text-white ${bgColor} flex justify-end p-1 w-full h-5 rounded-t-2xl`}></div>
 
-      {/* Cuerpo del mensaje con ícono y texto dinámicos */}
       <div className="flex justify-center items-center p-2">
         {icon}
         <p className={`font-medium m-0 p-3 ${textColor}`}>{mensaje}</p>

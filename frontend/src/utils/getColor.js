@@ -1,14 +1,14 @@
 export const getEstadoColor = (estado) => {
     switch (estado) {
       case "PENDIENTE":
-        return "bg-yellow-500"; // Amarillo
+        return "bg-yellow-500";
       case "ENVIADO":
-        return "bg-blue-500"; // Azul
+        return "bg-blue-500"; 
       case "ENTREGADO":
-        return "bg-green-500"; // Verde
+        return "bg-green-500"; 
       case "CANCELADO":
-        return "bg-red-500"; // Rojo
+        return "bg-red-500"; 
       default:
-        return "bg-gray-500"; // Gris por defecto
+        return "bg-gray-500"; 
     }
   }

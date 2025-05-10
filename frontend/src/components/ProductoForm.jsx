@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { useCategorias } from "../hooks/usecategorias"; // Importar el hook de categorías
+import { useCategorias } from "../hooks/usecategorias";
 
 export const ProductoForm = ({ productoInicial, onSave, onClose }) => {
   const [producto, setProducto] = useState(productoInicial || {});
-  const { categorias, loading, error } = useCategorias(); // Usar el hook para obtener categorías
+  const { categorias, loading, error } = useCategorias(); 
 
   useEffect(() => {
     setProducto(productoInicial || {});

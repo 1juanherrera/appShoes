@@ -3,12 +3,12 @@ import { useUserData } from "../hooks/useUserData";
 import { EditProfileForm } from "../components/EditProfileForm";
 
 export const Profile = () => {
-  const { user, error, isLoading, refetchUserData } = useUserData(); // Asegúrate de que `refetchUserData` esté disponible
+  const { user, error, isLoading, refetchUserData } = useUserData(); 
   const [isEditing, setIsEditing] = useState(false);
 
   const handleProfileUpdate = () => {
-    refetchUserData(); // Recarga los datos del usuario desde el backend
-    setIsEditing(false); // Cierra el formulario de edición
+    refetchUserData(); 
+    setIsEditing(false); 
   };
 
   if (isLoading) return <p>Cargando...</p>;

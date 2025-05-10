@@ -31,7 +31,7 @@ export const App = () => {
           <>
             <Navbar />
             <Home />
-            <Footer /> {/* Agrega el Footer aquí */}
+            <Footer />
           </>
         } />
         <Route path="/error" element={<Error />} />

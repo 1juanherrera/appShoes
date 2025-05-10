@@ -4,7 +4,7 @@ import request from "../api/apiClient";
 export const useCarrito = () => {
   const [carrito, setCarrito] = useState([]); // Carrito con productos
   const [loading, setLoading] = useState(true); // Estado de carga
-  const [error, setError] = useState(null); // Estado de error
+  const [error, setError] = useState(null);
 
   // Obtener el carrito del usuario
   const obtenerCarrito = async () => {
@@ -93,7 +93,7 @@ export const useCarrito = () => {
     try {
       const producto = carrito.find((item) => item.producto.id === productoId);
       if (!producto) {
-        return "Producto no encontrado en el carrito"; // Mensaje de error
+        return "Producto no encontrado en el carrito"; 
       }
 
       const response = await request(`/carrito/items/${productoId}`, "DELETE", null, true);
@@ -102,7 +102,7 @@ export const useCarrito = () => {
         setCarrito((prevCarrito) =>
           prevCarrito.filter((item) => item.producto.id !== productoId)
         );
-        return "Producto eliminado del carrito"; // Mensaje de éxito
+        return "Producto eliminado del carrito"; 
       } else {
         return response.error?.message || "Error al eliminar el producto del carrito";
       }
@@ -118,8 +118,8 @@ export const useCarrito = () => {
       const response = await request("/carrito", "DELETE", null, true);
 
       if (response.success) {
-        setCarrito([]); // Vaciar el carrito
-        return "Carrito vaciado correctamente"; // Mensaje de éxito
+        setCarrito([]); 
+        return "Carrito vaciado correctamente"; 
       } else {
         return response.error?.message || "Error al vaciar el carrito";
       }

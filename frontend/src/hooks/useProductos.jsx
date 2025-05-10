@@ -29,7 +29,7 @@ export const useProductos = (initialProductos = []) => {
     setFilteredProductos(productos);
   }, [productos]);
 
-  // Función para manejar la búsqueda
+  //  Manejar la búsqueda
   const handleSearch = (query) => {
     const lowerQuery = query.toLowerCase();
     const filtered = productos.filter(
@@ -42,7 +42,7 @@ export const useProductos = (initialProductos = []) => {
     setFilteredProductos(filtered);
   };
 
-  // Función para agregar un producto al carrito
+  // Agregar un producto al carrito
   const agregarAlCarrito = async (producto) => {
     try {
       const response = await request(
@@ -64,7 +64,7 @@ export const useProductos = (initialProductos = []) => {
     }
   };
 
-  // Función para eliminar un producto del carrito
+  // Eliminar un producto del carrito
   const eliminarDelCarrito = async (id) => {
     try {
       const response = await request(`/carrito/items/${id}`, "DELETE", null, true);
@@ -81,7 +81,7 @@ export const useProductos = (initialProductos = []) => {
     }
   };
 
-  // Función para vaciar el carrito
+  // Vaciar el carrito
   const vaciarCarrito = async () => {
     try {
       const response = await request("/carrito", "DELETE", null, true);

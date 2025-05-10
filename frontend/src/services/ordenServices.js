@@ -19,7 +19,7 @@ export const listarMisOrdenes = async () => {
 };
 
 export const obtenerOrdenPorId = async (ordenId) => {
-  console.log("ID recibido en obtenerOrdenPorId:", ordenId); // Depuración
+  console.log("ID recibido en obtenerOrdenPorId:", ordenId);
   if (!ordenId) {
     throw new Error("El ID de la orden es inválido o está vacío.");
   }
@@ -33,7 +33,9 @@ export const obtenerOrdenPorId = async (ordenId) => {
 };
 
 
-//ADMINISTRADOR
+// ADMINISTRADOR
+
+// Listar todas las órdenes (requiere rol ADMINISTRADOR)
 export const listarTodasLasOrdenes = async () => {
   const response = await request("/ordenes/todas", "GET", null, true); // Requiere autenticación
   if (response.success) {

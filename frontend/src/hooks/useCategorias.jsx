@@ -22,7 +22,7 @@ export const useCategorias = () => {
           console.error("Error al obtener categorías:", err.message);
           setError(err.message);
         } finally {
-          setLoading(false); // Finalizar la carga
+          setLoading(false); 
         }
       };
   
@@ -30,7 +30,7 @@ export const useCategorias = () => {
     }, []);
   
     const handleCategoriaClick = (id) => {
-      navigate(`/productos/categoria/${id}`); // Redirige al enlace con el ID de la categoría
+      navigate(`/productos/categoria/${id}`); 
     };
 
   return { categorias, loading, error, handleCategoriaClick };

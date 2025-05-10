@@ -5,16 +5,16 @@ import { listarCategorias } from "../api/categorias";
 
 export const AdminCategorias = () => {
   const { items, crear, actualizar, eliminar } = useCrud("/admin/categorias", {
-    listar: listarCategorias, // Usa la función personalizada para listar
+    listar: listarCategorias, 
   });
-  const [selectedCategoria, setSelectedCategoria] = useState(null); // Categoría seleccionada
-  const [isFormVisible, setIsFormVisible] = useState(false); // Controla si el formulario está visible
+  const [selectedCategoria, setSelectedCategoria] = useState(null); 
+  const [isFormVisible, setIsFormVisible] = useState(false);
 
   const handleSave = async (categoria) => {
     if (categoria.id) {
       await actualizar(categoria.id, categoria); // Actualiza la categoría existente
     } else {
-      await crear(categoria); // Crea una nueva categoría
+      await crear(categoria); 
     }
     setSelectedCategoria(null); // Limpia la categoría seleccionada
     setIsFormVisible(false); // Oculta el formulario
@@ -22,12 +22,12 @@ export const AdminCategorias = () => {
 
   const handleCreate = () => {
     setSelectedCategoria({}); // Categoría vacía para crear
-    setIsFormVisible(true); // Muestra el formulario
+    setIsFormVisible(true); 
   };
 
   const handleEdit = (categoria) => {
     setSelectedCategoria(categoria); // Establece la categoría seleccionada
-    setIsFormVisible(true); // Muestra el formulario
+    setIsFormVisible(true);
     
   };
 
@@ -44,7 +44,7 @@ export const AdminCategorias = () => {
         <CategoriaForm
           categoriaInicial={selectedCategoria}
           onSave={handleSave}
-          onClose={() => setIsFormVisible(false)} // Oculta el formulario
+          onClose={() => setIsFormVisible(false)} 
         />
       )}
       <ul>

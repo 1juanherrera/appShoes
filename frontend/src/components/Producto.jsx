@@ -6,17 +6,16 @@ import { Message } from "./Message";
 export const Producto = ({ productos = [], onAgregarAlCarrito }) => {
   const [mensaje, setMensaje] = useState("");
   const [mensajeVisible, setMensajeVisible] = useState(false);
-  const [tipoMensaje, setTipoMensaje] = useState("error"); // Estado para el tipo de mensaje
-  const [contadorCarrito, setContadorCarrito] = useState({}); // Estado para el contador del carrito
+  const [tipoMensaje, setTipoMensaje] = useState("error"); 
+  const [contadorCarrito, setContadorCarrito] = useState({}); 
 
   const handleAgregarAlCarrito = async (producto) => {
-    const mensaje = await onAgregarAlCarrito(producto); // Obtén el mensaje del hook
-    setMensaje(mensaje); // Establece el mensaje
-    setTipoMensaje(mensaje === "Producto agregado al carrito" ? "success" : "error"); // Determina el tipo de mensaje
-    setMensajeVisible(true); // Muestra el mensaje
+    const mensaje = await onAgregarAlCarrito(producto); 
+    setMensaje(mensaje); 
+    setTipoMensaje(mensaje === "Producto agregado al carrito" ? "success" : "error"); 
+    setMensajeVisible(true); 
 
     if (mensaje === "Producto agregado al carrito") {
-      // Incrementa el contador del carrito para este producto
       setContadorCarrito((prev) => ({
         ...prev,
         [producto.id]: (prev[producto.id] || 0) + 1,
@@ -28,7 +27,7 @@ export const Producto = ({ productos = [], onAgregarAlCarrito }) => {
     <>
       <Message
         mensaje={mensaje}
-        tipo={tipoMensaje} // Pasa el tipo de mensaje
+        tipo={tipoMensaje}
         visible={mensajeVisible}
         onClose={() => setMensajeVisible(false)}
       />
@@ -69,7 +68,7 @@ export const Producto = ({ productos = [], onAgregarAlCarrito }) => {
                 <div className="flex items-center relative">
                   <button
                     onClick={(e) => {
-                      e.preventDefault(); // Evita que el clic en el botón redirija al detalle
+                      e.preventDefault(); 
                       handleAgregarAlCarrito(producto);
                     }}
                     className="text-blue-700 px-4 py-2 rounded-full mt-2 flex items-center"

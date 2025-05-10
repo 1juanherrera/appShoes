@@ -2,8 +2,8 @@ import { useState } from "react";
 
 export const CategoriaForm = ({ categoriaInicial, onSave, onClose }) => {
   const [categoria, setCategoria] = useState(categoriaInicial);
-  const [error, setError] = useState(null); // Estado para manejar errores
-  const [loading, setLoading] = useState(false); // Estado para manejar la carga
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,14 +16,14 @@ export const CategoriaForm = ({ categoriaInicial, onSave, onClose }) => {
       setError("El nombre de la categoría es obligatorio.");
       return;
     }
-    setError(null); // Limpia errores previos
-    setLoading(true); // Activa el estado de carga
+    setError(null); 
+    setLoading(true); 
     try {
-      await onSave(categoria); // Llama a la función onSave proporcionada
-      setLoading(false); // Desactiva el estado de carga
+      await onSave(categoria); 
+      setLoading(false); 
     } catch (err) {
       setError("Ocurrió un error al guardar la categoría.");
-      setLoading(false); // Desactiva el estado de carga
+      setLoading(false); 
     }
   };
 

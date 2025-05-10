@@ -1,15 +1,15 @@
-import request from "../api/apiClient"; // Asegúrate de que la ruta sea correcta
+import request from "../api/apiClient";
 import { setToken } from "../store/session";
 
-// Inicia sesión y devuelve los datos del usuario
+
 export async function login(email, password) {
   const response = await request("/auth/login", "POST", {
     email: email,
-    contrasena: password, // Asegúrate de que coincida con tu DTO
+    contrasena: password, 
   });
 
   if (response.success) {
-    const data = response.data; // Devuelve los datos del usuario (token, rol, etc.)
+    const data = response.data; 
     setToken(data.token);
     return data;
   } else {
@@ -38,9 +38,9 @@ export async function getUserData() {
 }
 
 export const registrarUsuario = async (formData) => {
-  const response = await request("/auth/register", "POST", formData, false); // Cambia la URL si es necesario
+  const response = await request("/auth/register", "POST", formData, false); 
   if (response.success) {
-    return response.data; // Devuelve el token y los datos del usuario
+    return response.data;
   } else {
     throw new Error(response.error.message || "Error al registrar el usuario.");
   }
@@ -51,7 +51,7 @@ export async function updateUserData(updatedData) {
   const response = await request("/usuarios/me", "PUT", updatedData, true);
 
   if (response.success) {
-    return response.data; // Devuelve los datos actualizados del usuario
+    return response.data; 
   } else {
     throw new Error(response.error.message || "Error al actualizar los datos del usuario");
   }

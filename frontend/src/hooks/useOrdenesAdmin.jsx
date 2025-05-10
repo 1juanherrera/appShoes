@@ -18,7 +18,7 @@ export const useOrdenesAdmin = () => {
       console.error("Error al listar todas las órdenes:", err);
       setError(err.message);
     }
-  }, []); // Dependencias vacías para que la referencia no cambie
+  }, []); 
 
   const fetchOrdenPorId = async () => {
     try {
@@ -36,7 +36,7 @@ export const useOrdenesAdmin = () => {
       const data = await actualizarEstadoOrden(id, estado);
       setMensaje("Estado actualizado con éxito.");
       setError("");
-      fetchTodasLasOrdenes(); // Refresca la lista de órdenes
+      fetchTodasLasOrdenes(); 
     } catch (err) {
       console.error("Error al actualizar el estado de la orden:", err);
       setError(err.message);

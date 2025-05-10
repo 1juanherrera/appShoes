@@ -7,16 +7,16 @@ import { Producto } from "./Producto";
 export const ProductosCategoria = () => {
   const { id } = useParams();
   const { productos, setProductos, agregarAlCarrito } = useProductos();
-  const [nombreCategoria, setNombreCategoria] = useState(""); // Estado para el nombre de la categoría
+  const [nombreCategoria, setNombreCategoria] = useState(""); 
 
   useEffect(() => {
     const fetchProductos = async () => {
       try {
         const response = await obtenerProductosPorCategoria(id);
-        console.log("Respuesta de la API:", response); // Depuración
+        console.log("Respuesta de la API:", response);
         if (response.success) {
           setProductos(response.data);
-          setNombreCategoria(response.data[0]?.categoria?.nombre || "Categoría desconocida"); // Accede al nombre de la categoría
+          setNombreCategoria(response.data[0]?.categoria?.nombre || "Categoría desconocida"); 
         } else {
           throw new Error(response.error.message || "Error al obtener productos");
         }

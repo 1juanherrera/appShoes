@@ -10,7 +10,7 @@ export const EditProfileForm = ({ user, onClose }) => {
     nombreUsuario: user.nombreUsuario || "",
     contacto: user.contacto || "",
     direccion: user.direccion || "",
-    contrasena: "", // Inicializa la contraseña como vacía
+    contrasena: "", // Inicializo la contraseña como vacía
   });
 
   const handleChange = (e) => {
@@ -23,10 +23,10 @@ export const EditProfileForm = ({ user, onClose }) => {
   
     const dataToSend = { ...formData };
     if (!formData.contrasena) {
-      delete dataToSend.contrasena; // Elimina la contraseña si está vacía
+      delete dataToSend.contrasena; // Elimino la contraseña si está vacía
     }
   
-    const updatedUser = await updateUser(dataToSend); // Supón que `updateUser` devuelve los datos actualizados
+    const updatedUser = await updateUser(dataToSend); // `updateUser` devuelve los datos actualizados
     alert("Perfil actualizado con éxito.");
     onClose(updatedUser); // Devuelve los datos actualizados al componente padre
   };

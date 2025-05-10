@@ -1,17 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
-import { getUserData, updateUserData } from "../services/authService"; // Importa las funciones necesarias
+import { getUserData, updateUserData } from "../services/authService"; 
 
 export const useUserData = () => {
-  const [user, setUser] = useState(null); // Estado para almacenar los datos del usuario
-  const [error, setError] = useState(""); // Estado para manejar errores
+  const [user, setUser] = useState(null); 
+  const [error, setError] = useState(""); 
   const [isLoading, setIsLoading] = useState(true);
 
-  // Función para obtener los datos del usuario
   const fetchUserData = async () => {
     setIsLoading(true);
     setError("");
     try {
-      const data = await getUserData(); // Llama a la función asíncrona para obtener los datos
+      const data = await getUserData();
       setUser(data);
     } catch (err) {
       console.error("Error al obtener los datos del usuario:", err.message);
@@ -25,13 +24,13 @@ export const useUserData = () => {
     await fetchUserData();
   }, []);
 
-  // Función para actualizar los datos del usuario
+  // Actualizar los datos del usuario
   const updateUser = async (updatedData) => {
     setIsLoading(true);
     setError("");
     try {
-      const updatedUser = await updateUserData(updatedData); // Llama a la función asíncrona para actualizar los datos
-      setUser(updatedUser); // Actualiza el estado con los datos actualizados
+      const updatedUser = await updateUserData(updatedData); 
+      setUser(updatedUser); 
     } catch (err) {
       console.error("Error al actualizar los datos del usuario:", err.message);
       setError("No se pudieron actualizar los datos del usuario.");
@@ -52,8 +51,8 @@ export const useUserData = () => {
     error,
     isAdmin,
     isLoading,
-    fetchUserData, // Exporta la función para obtener los datos
-    updateUser, // Exporta la función para actualizar los datos
+    fetchUserData, 
+    updateUser, 
     refetchUserData
     
   }
