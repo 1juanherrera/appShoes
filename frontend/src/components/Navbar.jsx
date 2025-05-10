@@ -7,6 +7,7 @@ import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import Logout from "./Logout";
 import { FiShoppingBag } from "react-icons/fi";
 import { useUserData } from "../hooks/useUserData";
+import logo  from "../assets/logo.png"; // Asegúrate de que la ruta sea correcta
 
 export const Navbar = () => {
 
@@ -20,9 +21,7 @@ export const Navbar = () => {
   return (
     <nav className="bg-blue-800 p-4 text-white flex items-center mb-5">
       <div className="flex items-center justify-between w-full">
-        <h1 className="text-xl font-bold text-white">
-          <Link to="/home" className="text-white">AppShoes</Link>
-        </h1>
+        <img className="w-40" src={logo} alt="logo" />
         <ul className="space-x-4 flex flex-wrap m-5 justify-around w-6/12">
           <li>
             <Link to="/home" className="hover:underline text-white cursor-pointer flex justify-center items-center text-2xl">
