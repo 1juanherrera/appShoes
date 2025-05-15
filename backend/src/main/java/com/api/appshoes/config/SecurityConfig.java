@@ -35,24 +35,13 @@ public class SecurityConfig {
     // Bean CorsConfigurationSource que define la configuración CORS
     @Bean
     CorsConfigurationSource corsConfigurationSource(@Value("${cors.allowed.origins}") String allowedOriginsValue) {
-        // Aunque inyectamos el valor de properties, NO lo usamos abajo
-        // para evitar el error que tenías. Usamos el valor hardcodeado.
+
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // --- 👇 ORIGEN PERMITIDO HARDCODEADO (ESTA FUE LA SOLUCIÓN) 👇 ---
-        // Establecemos directamente el origen que sabemos que funciona.
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
-        // --- ------------------------------------------------------- ---
-
-        // --- Línea original que leía de properties (comentada para referencia) ---
-        // configuration.setAllowedOrigins(Arrays.asList(allowedOriginsValue.split(",")));
-        // --- ----------------------------------------------------------------- ---
 
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
 
-        // --- 👇 REVIERTE ESTO A CABECERAS ESPECÍFICAS SI YA FUNCIONA 👇 ---
-        // Es más seguro permitir solo las cabeceras necesarias.
-        // configuration.setAllowedHeaders(List.of("*")); // Temporal que usamos antes
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type", "X-Requested-With", "Accept", "Origin")); // Lista específica recomendada
         // --- --------------------------------------------------------- ---
 

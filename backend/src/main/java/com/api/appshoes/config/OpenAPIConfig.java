@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OpenAPIConfig {
-    // Opcional: Leer valores desde application.properties
     @Value("${spring.application.name}")
     private String appName;
 
